@@ -25,10 +25,18 @@ function ForgotPassword() {
           <Form.Item
             name="email"
             rules={[{
+              type: 'email', required: true, message: 'Please enter your email',
+            }]}
+          >
+            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            rules={[{
               type: 'email', required: true, message: 'Please enter new password',
             }]}
           >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="New Password" />
+            <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="New Password" />
           </Form.Item>
           <Form.Item
             name="password"
