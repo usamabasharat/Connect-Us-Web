@@ -31,20 +31,20 @@ function ForgotPassword() {
             <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
           </Form.Item>
           <Form.Item
-            name="email"
+            name="password"
             rules={[{
-              type: 'email', required: true, message: 'Please enter new password',
+              type: 'password', required: true, message: 'Please enter new password',
             }]}
           >
             <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="New Password" />
           </Form.Item>
           <Form.Item
-            name="password"
+            name="confirm-password"
             rules={[{ required: true, message: 'Please enter confirm password' }]}
           >
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
+              type="confirm-password"
               placeholder="Confirm Password"
             />
           </Form.Item>
