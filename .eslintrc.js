@@ -1,7 +1,7 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    es2021: true
   },
   extends: [
     'eslint:recommended',
@@ -16,7 +16,20 @@ module.exports = {
   },
   plugins: [
     'react',
+    'prettier'
   ],
   rules: {
+    'import/no-extraneous-dependencies': 'off',
+    'jsx-a11y/label-has-associated-control': [
+      'warn',
+      {
+        required: {
+          some: ['nesting', 'id'],
+        },
+      },
+    ],
+    'no-console': 'off',
+    'comma-dangle': 'off',
+    'react/prop-types': 'off',
   },
 };
