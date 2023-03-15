@@ -1,12 +1,9 @@
 import React from 'react';
-import './App.css';
-import ForgotPassword from './containers/ForgotPassword';
+import Register from './containers/Register';
 
 function App() {
   return (
-    <div className="App">
-      <ForgotPassword />
-    </div>
+    <Register />
   );
 }
 
