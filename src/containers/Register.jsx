@@ -3,6 +3,21 @@ import { FrownOutlined, SmileOutlined } from '@ant-design/icons';
 import { Button, Form, notification } from 'antd';
 import { updateUsers, credentials } from '../constants/credentials';
 import Textfield from '../shared/TextField';
+import { NUMBER_PATTERN, PASSWORD_PATTERN } from '../constants/pattern';
+import {
+  FIRST_NAME_PROMPT,
+  LAST_NAME_PROMPT,
+  VALID_NUMBER_PROMT,
+  VALID_EMAIL_PROMT,
+  PASSWORD_REQUIRED_PROMT,
+  MIN_PASSWORD_PROMT,
+  STRONG_PASSWORD_PROMT,
+} from '../constants/messages';
+import {
+  SIGNUP_SUCCESS,
+  SINGUP_FAIL_EMAIL,
+  SINGUP_FAIL_PASSWORD
+} from '../constants/notifications';
 
 /*
   @Register Function
@@ -12,33 +27,33 @@ function Register() {
   const [users, setUsers] = useState(credentials);
 
   const onFinish = (values) => {
-    if (values.password === values.password1) {
+    if (values.Password === values.ReEnterPassword) {
       let hasMatch = false;
       for (let i = 0; i < credentials.length; i += 1) {
-        if (credentials[i].email === values.email) {
+        if (credentials[i].email === values.Email) {
           hasMatch = true;
         }
       }
       if (!hasMatch) {
-        const newUser = { email: values.email, password: values.password };
+        const newUser = { email: values.Email, password: values.Password };
         setUsers(...users, newUser);
         updateUsers(newUser);
         notification.open({
           message: 'Success',
-          description: 'User SignedUp Successfuly.',
+          description: SIGNUP_SUCCESS,
           icon: <SmileOutlined style={{ color: '#108ee9' }} />
         });
       } else {
         notification.open({
           message: 'Error',
-          description: 'Email Already exist.',
+          description: SINGUP_FAIL_EMAIL,
           icon: <FrownOutlined style={{ color: '#108ee9' }} />
         });
       }
     } else {
       notification.open({
         message: 'Error',
-        description: 'Both password do not match.',
+        description: SINGUP_FAIL_PASSWORD,
         icon: <FrownOutlined style={{ color: '#108ee9' }} />
       });
     }
@@ -55,22 +70,21 @@ function Register() {
           onFinish={onFinish}
         >
           <Textfield
-            name="First Name"
+            name="FirstName"
             rules={[
               {
-                type: 'text',
                 required: true,
-                message: 'Please input your First Name!'
+                message: FIRST_NAME_PROMPT
               }
             ]}
             type="text"
           />
           <Textfield
-            name="Last Name"
+            name="LastName"
             rules={[
               {
                 required: true,
-                message: 'Please input your First Name!'
+                message: LAST_NAME_PROMPT
               }
             ]}
             type="text"
@@ -80,8 +94,8 @@ function Register() {
             rules={[
               {
                 required: true,
-                message: 'Please input a valid number!',
-                pattern: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/
+                message: VALID_NUMBER_PROMT,
+                pattern: NUMBER_PATTERN
               }
             ]}
             type="text"
@@ -91,7 +105,7 @@ function Register() {
             rules={[
               {
                 required: true,
-                message: 'Please input your valid email!'
+                message: VALID_EMAIL_PROMT
               }
             ]}
             type="email"
@@ -99,23 +113,23 @@ function Register() {
           <Textfield
             name="Password"
             rules={[
-              { required: true, message: 'Please input your Password!' },
-              { min: 8, message: 'Password must be minimum 8 characters.' },
+              { required: true, message: PASSWORD_REQUIRED_PROMT },
+              { min: 8, message: MIN_PASSWORD_PROMT },
               {
-                pattern: /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9!#@$%\-_=+<>]+)$/,
-                message: 'Password not strong enough!'
+                pattern: PASSWORD_PATTERN,
+                message: STRONG_PASSWORD_PROMT
               }
             ]}
             type="password"
           />
           <Textfield
-            name="Re-Enter Password"
+            name="ReEnterPassword"
             rules={[
-              { required: true, message: 'Please input your Password!' },
-              { min: 8, message: 'Password must be minimum 8 characters.' },
+              { required: true, message: PASSWORD_REQUIRED_PROMT },
+              { min: 8, message: MIN_PASSWORD_PROMT },
               {
-                pattern: /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9!#@$%\-_=+<>]+)$/,
-                message: 'Password not strong enough!'
+                pattern: PASSWORD_PATTERN,
+                message: STRONG_PASSWORD_PROMT
               }
             ]}
             type="password"
