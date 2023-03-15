@@ -3,29 +3,30 @@ import './App.css';
 import { Layout } from 'antd';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
-import ForgotPassword from './containers/ForgotPassword';
+// import ForgotPassword from './containers/ForgotPassword';
+import Register from './containers/Register';
 
 const { Content } = Layout;
 
 function App() {
-  const [visible, setVisible] = useState(false);
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const showDrawer = () => {
-    setVisible(true);
+    setIsMenuVisible(true);
   };
 
-  const onClose = () => {
-    setVisible(false);
+  const hideDrawer = () => {
+    setIsMenuVisible(false);
   };
 
   return (
     <div className="App">
       <Layout>
-        <Navbar onMenuClick={showDrawer} />
-        <Sidebar visible={visible} onClose={onClose} />
+        <Navbar onMenuExpand={showDrawer} />
+        <Sidebar isMenuVisible={isMenuVisible} hideDrawer={hideDrawer} />
         <Layout>
           <Content>
-            <ForgotPassword />
+            <Register />
           </Content>
         </Layout>
       </Layout>

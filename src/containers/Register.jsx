@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { FrownOutlined, SmileOutlined } from '@ant-design/icons';
+import {
+  FrownOutlined, SmileOutlined, LockOutlined, UserOutlined, PhoneOutlined, MailOutlined
+} from '@ant-design/icons';
 import { Button, Form, notification } from 'antd';
 import { updateUsers, credentials } from '../constants/credentials';
 import Textfield from '../shared/TextField';
@@ -7,11 +9,11 @@ import { NUMBER_PATTERN, PASSWORD_PATTERN } from '../constants/pattern';
 import {
   FIRST_NAME_PROMPT,
   LAST_NAME_PROMPT,
-  VALID_NUMBER_PROMT,
-  VALID_EMAIL_PROMT,
-  PASSWORD_REQUIRED_PROMT,
-  MIN_PASSWORD_PROMT,
-  STRONG_PASSWORD_PROMT,
+  VALID_NUMBER_PROMPT,
+  VALID_EMAIL_PROMPT,
+  PASSWORD_REQUIRED_PROMPT,
+  MIN_PASSWORD_PROMPT,
+  STRONG_PASSWORD_PROMPT,
 } from '../constants/messages';
 import {
   SIGNUP_SUCCESS,
@@ -78,6 +80,7 @@ function Register() {
               }
             ]}
             type="text"
+            prefix={<UserOutlined className="site-form-item-icon" />}
           />
           <Textfield
             name="LastName"
@@ -88,51 +91,56 @@ function Register() {
               }
             ]}
             type="text"
+            prefix={<UserOutlined className="site-form-item-icon" />}
           />
           <Textfield
             name="Number"
             rules={[
               {
                 required: true,
-                message: VALID_NUMBER_PROMT,
+                message: VALID_NUMBER_PROMPT,
                 pattern: NUMBER_PATTERN
               }
             ]}
             type="text"
+            prefix={<PhoneOutlined className="site-form-item-icon" />}
           />
           <Textfield
             name="Email"
             rules={[
               {
                 required: true,
-                message: VALID_EMAIL_PROMT
+                message: VALID_EMAIL_PROMPT
               }
             ]}
             type="email"
+            prefix={<MailOutlined className="site-form-item-icon" />}
           />
           <Textfield
             name="Password"
             rules={[
-              { required: true, message: PASSWORD_REQUIRED_PROMT },
-              { min: 8, message: MIN_PASSWORD_PROMT },
+              { required: true, message: PASSWORD_REQUIRED_PROMPT },
+              { min: 8, message: MIN_PASSWORD_PROMPT },
               {
                 pattern: PASSWORD_PATTERN,
-                message: STRONG_PASSWORD_PROMT
+                message: STRONG_PASSWORD_PROMPT
               }
             ]}
             type="password"
+            prefix={<LockOutlined className="site-form-item-icon" />}
           />
           <Textfield
-            name="ReEnterPassword"
+            name="Confirm Password"
             rules={[
-              { required: true, message: PASSWORD_REQUIRED_PROMT },
-              { min: 8, message: MIN_PASSWORD_PROMT },
+              { required: true, message: PASSWORD_REQUIRED_PROMPT },
+              { min: 8, message: MIN_PASSWORD_PROMPT },
               {
                 pattern: PASSWORD_PATTERN,
-                message: STRONG_PASSWORD_PROMT
+                message: STRONG_PASSWORD_PROMPT
               }
             ]}
             type="password"
+            prefix={<LockOutlined className="site-form-item-icon" />}
           />
           <Form.Item>
             <div className="flex justify-between">

@@ -6,7 +6,7 @@ function Textfield({
 }) {
   return (
     <Form.Item name={name} rules={rules}>
-      <label className="block text-gray-700 text-sm font-bold mb-2">
+      <label className="block text-gray-700 text-sm font-bold mb-2 text-left">
         {name}
         <Input
           type={type}

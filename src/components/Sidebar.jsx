@@ -3,14 +3,13 @@ import React from 'react';
 import { Menu, Drawer } from 'antd';
 import { DashboardOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons';
 
-function Sidebar({ visible, onClose }) {
+function Sidebar({ isMenuVisible, hideDrawer }) {
   return (
     <Drawer
       className="ant-layout-sider-dark"
       placement="left"
-      closable={false}
-      onClose={onClose}
-      visible={visible}
+      onClose={hideDrawer}
+      open={isMenuVisible}
       width={200}
     >
       <div className="logo" />
