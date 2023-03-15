@@ -12,7 +12,7 @@ const { Header } = Layout;
 function Navbar({ onMenuClick }) {
   return (
     <Header className="bg-green-800">
-      <Menu theme="light" mode="horizontal" className="bg-green-800 text-white justify-center">
+      <Menu theme="light" mode="horizontal" className="bg-green-800 text-white">
         <Menu.Item key="menu-icon" icon={<MenuOutlined />} onClick={onMenuClick} />
         <Menu.Item key="home" icon={<HomeOutlined />}>
           Home

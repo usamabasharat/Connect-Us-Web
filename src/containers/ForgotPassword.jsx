@@ -3,9 +3,18 @@
 import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import {
-  Button, Form, Input,
+  Button, Form,
 } from 'antd';
 import 'tailwindcss/tailwind.css';
+import Textfield from '../shared/TextField';
+import {
+  VALID_EMAIL_PROMT,
+  PASSWORD_REQUIRED_PROMT,
+  MIN_PASSWORD_PROMT,
+  STRONG_PASSWORD_PROMT,
+  PASSWORD_DOESNOT_MATCH_PROMT
+} from '../constants/messages';
+import { PASSWORD_PATTERN } from '../constants/pattern';
 
 function ForgotPassword() {
   const onFinish = () => {
@@ -21,59 +30,51 @@ function ForgotPassword() {
           initialValues={{ remember: true }}
           onFinish={onFinish}
         >
-          <Form.Item
-            name="email"
-            rules={[{
-              type: 'email', required: true, message: 'Please enter your valid email!',
-            }]}
-            hasFeedback
-          >
-            <label className="block text-left text-gray-700 text-sm font-bold mb-4">
-              Email
-              <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
-            </label>
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'Please input your Password!' },
-              { min: 8, message: 'Password must be minimum 8 characters.' },
+          <Textfield
+            name="Email"
+            type="email"
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            rules={[
+              {
+                required: true,
+                message: VALID_EMAIL_PROMT
+              }
             ]}
-            hasFeedback
-          >
-            <label className="block text-left text-gray-700 text-sm font-bold mb-4">
-              Password
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="Password"
-              />
-            </label>
-          </Form.Item>
-          <Form.Item
-            name="confirm_password"
-            dependencies={['password']}
-            rules={[{ required: true, message: 'Please confirm your password!' },
-              { min: 8, message: 'Password must be minimum 8 characters.' },
+          />
+          <Textfield
+            name="Password"
+            type="password"
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            rules={[
+              { required: true, message: PASSWORD_REQUIRED_PROMT },
+              { min: 8, message: MIN_PASSWORD_PROMT },
+              {
+                pattern: PASSWORD_PATTERN,
+                message: STRONG_PASSWORD_PROMT
+              }
+            ]}
+          />
+          <Textfield
+            name="ReEnterPassword"
+            type="password"
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            rules={[
+              { required: true, message: PASSWORD_REQUIRED_PROMT },
+              { min: 8, message: MIN_PASSWORD_PROMT },
+              {
+                pattern: PASSWORD_PATTERN,
+                message: STRONG_PASSWORD_PROMT
+              },
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!value || getFieldValue('password') === value) {
+                  if (!value || getFieldValue('Password') === value) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(new Error('Passwords do not match'));
+                  return Promise.reject(new Error(PASSWORD_DOESNOT_MATCH_PROMT));
                 },
               }),
             ]}
-            hasFeedback
-          >
-            <label className="block text-left text-gray-700 text-sm font-bold mb-4">
-              Confirm Password
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="Confirm Password"
-              />
-            </label>
-          </Form.Item>
+          />
           <Form.Item>
             <div className="flex justify-between">
               <Button htmlType="submit" className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20b2aa] hover:text-white w-2/4">
