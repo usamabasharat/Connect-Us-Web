@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -32,13 +33,18 @@ function Login() {
           </Form.Item>
           <Form.Item
             name="password"
-            rules={[{ required: true, message: 'Please input your Password!' }]}
+            rules={[{ required: true, message: 'Please input your Password!' },
+              { min: 8, message: 'Password must be minimum 8 characters.' },
+            ]}
           >
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
-              placeholder="Password"
-            />
+            <label className="block text-left text-gray-700 text-sm font-bold mb-4">
+              Password
+              <Input
+                prefix={<LockOutlined className="site-form-item-icon" />}
+                type="password"
+                placeholder="Password"
+              />
+            </label>
           </Form.Item>
           <Form.Item className="text-end">
             <a className="login-form-forgot text-md text-[#008080] hover:text-[#20b2aa]" href="#">
