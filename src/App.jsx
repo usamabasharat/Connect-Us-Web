@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { Layout } from 'antd';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
-// import ForgotPassword from './containers/ForgotPassword';
+import ForgotPassword from './containers/ForgotPassword';
+import Login from './containers/Login';
 import Register from './containers/Register';
 
 const { Content } = Layout;
@@ -21,15 +23,19 @@ function App() {
 
   return (
     <div className="App">
-      <Layout>
-        <Navbar onMenuExpand={showDrawer} />
-        <Sidebar isMenuVisible={isMenuVisible} hideDrawer={hideDrawer} />
+      <BrowserRouter>
         <Layout>
+          <Navbar onMenuExpand={showDrawer} />
+          <Sidebar isMenuVisible={isMenuVisible} hideDrawer={hideDrawer} />
           <Content>
-            <Register />
+            <Routes>
+              <Route exact path="/" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/forgotpassword" element={<ForgotPassword />} />
+            </Routes>
           </Content>
         </Layout>
-      </Layout>
+      </BrowserRouter>
     </div>
   );
 }
