@@ -3,10 +3,10 @@ import { Button, Form } from 'antd';
 import Textfield from '../shared/TextField';
 import { PASSWORD_PATTERN } from '../constants/pattern';
 import {
-  VALID_EMAIL_PROMT,
-  PASSWORD_REQUIRED_PROMT,
-  MIN_PASSWORD_PROMT,
-  STRONG_PASSWORD_PROMT,
+  VALID_EMAIL_PROMPT,
+  PASSWORD_REQUIRED_PROMPT,
+  MIN_PASSWORD_PROMPT,
+  STRONG_PASSWORD_PROMPT,
 } from '../constants/messages';
 
 function Login() {
@@ -29,7 +29,7 @@ function Login() {
             rules={[
               {
                 required: true,
-                message: VALID_EMAIL_PROMT,
+                message: VALID_EMAIL_PROMPT,
               },
             ]}
             type="email"
@@ -37,16 +37,15 @@ function Login() {
           <Textfield
             name="Password"
             rules={[
-              { required: true, message: PASSWORD_REQUIRED_PROMT },
-              { min: 8, message: MIN_PASSWORD_PROMT },
+              { required: true, message: PASSWORD_REQUIRED_PROMPT },
+              { min: 8, message: MIN_PASSWORD_PROMPT },
               {
                 pattern: PASSWORD_PATTERN,
-                message: STRONG_PASSWORD_PROMT,
+                message: STRONG_PASSWORD_PROMPT,
               },
             ]}
             type="password"
           />
-
           <Form.Item className="text-end">
             <p className="login-form-forgot text-md text-[#008080] hover:text-[#20b2aa]">
               Forgot password
