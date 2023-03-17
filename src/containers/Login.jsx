@@ -46,6 +46,7 @@ function Login() {
             ]}
             type="password"
           />
+
           <Form.Item className="text-end">
             <p className="login-form-forgot text-md text-[#008080] hover:text-[#20b2aa]">
               Forgot password

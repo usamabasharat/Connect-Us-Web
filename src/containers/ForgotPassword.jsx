@@ -1,17 +1,20 @@
-/* eslint-disable no-console */
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import {
-  Button, Form, Input,
+  Button, Form,
 } from 'antd';
+import 'tailwindcss/tailwind.css';
+import Textfield from '../shared/TextField';
+import {
+  VALID_EMAIL_PROMPT,
+  PASSWORD_REQUIRED_PROMPT,
+  MIN_PASSWORD_PROMPT,
+  STRONG_PASSWORD_PROMPT,
+  PASSWORD_DOES_NOT_MATCH_PROMPT
+} from '../constants/messages';
+import { PASSWORD_PATTERN } from '../constants/pattern';
 
 function ForgotPassword() {
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-  };
-
   return (
     <div className="flex h-screen">
       <div className="m-auto w-1/4 border-2 rounded-md p-5 space-y-10 bg-white">
@@ -20,40 +23,58 @@ function ForgotPassword() {
           name="normal_login"
           className="login-form"
           initialValues={{ remember: true }}
-          onFinish={onFinish}
         >
-          <Form.Item
-            name="email"
-            rules={[{
-              type: 'email', required: true, message: 'Please enter your email',
-            }]}
-          >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[{
-              type: 'password', required: true, message: 'Please enter new password',
-            }]}
-          >
-            <Input prefix={<LockOutlined className="site-form-item-icon" />} placeholder="New Password" />
-          </Form.Item>
-          <Form.Item
-            name="confirm-password"
-            rules={[{ required: true, message: 'Please enter confirm password' }]}
-          >
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              type="confirm-password"
-              placeholder="Confirm Password"
-            />
-          </Form.Item>
+          <Textfield
+            name="Email"
+            type="email"
+            prefix={<MailOutlined className="site-form-item-icon" />}
+            rules={[
+              {
+                required: true,
+                message: VALID_EMAIL_PROMPT
+              }
+            ]}
+          />
+          <Textfield
+            name="Password"
+            type="password"
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            rules={[
+              { required: true, message: PASSWORD_REQUIRED_PROMPT },
+              { min: 8, message: MIN_PASSWORD_PROMPT },
+              {
+                pattern: PASSWORD_PATTERN,
+                message: STRONG_PASSWORD_PROMPT
+              }
+            ]}
+          />
+          <Textfield
+            name="Confirm Password"
+            type="password"
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            rules={[
+              { required: true, message: PASSWORD_REQUIRED_PROMPT },
+              { min: 8, message: MIN_PASSWORD_PROMPT },
+              {
+                pattern: PASSWORD_PATTERN,
+                message: STRONG_PASSWORD_PROMPT
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('Password') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error(PASSWORD_DOES_NOT_MATCH_PROMPT));
+                },
+              }),
+            ]}
+          />
           <Form.Item>
             <div className="flex justify-between">
               <Button htmlType="submit" className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20b2aa] hover:text-white w-2/4">
                 Reset Password
               </Button>
-              <a href="#" className="text-[#008080] hover:text-[#20b2aa]">Login Now!</a>
+              <p className="text-[#008080] hover:text-[#20b2aa]">Login Now!</p>
             </div>
           </Form.Item>
         </Form>
