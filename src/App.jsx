@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
@@ -40,14 +39,6 @@ function App() {
         </Layout>
       </BrowserRouter>
     </div>
-=======
-import React from 'react';
-import Register from './containers/Register';
-
-function App() {
-  return (
-    <Register />
->>>>>>> master
   );
 }
 

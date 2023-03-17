@@ -1,12 +1,13 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-console */
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Form } from 'antd';
+import Textfield from '../shared/TextField';
+import { PASSWORD_PATTERN } from '../constants/pattern';
 import {
-  Button, Form, Input,
-} from 'antd';
+  VALID_EMAIL_PROMPT,
+  PASSWORD_REQUIRED_PROMPT,
+  MIN_PASSWORD_PROMPT,
+  STRONG_PASSWORD_PROMPT,
+} from '../constants/messages';
 
 function Login() {
   const onFinish = (values) => {
@@ -23,40 +24,44 @@ function Login() {
           initialValues={{ remember: true }}
           onFinish={onFinish}
         >
-          <Form.Item
-            name="email"
-            rules={[{
-              type: 'email', required: true, message: 'Please input your valid email!',
-            }]}
-          >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="email" />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'Please input your Password!' },
-              { min: 8, message: 'Password must be minimum 8 characters.' },
+          <Textfield
+            name="Email"
+            rules={[
+              {
+                required: true,
+                message: VALID_EMAIL_PROMPT,
+              },
             ]}
-          >
-            <label className="block text-left text-gray-700 text-sm font-bold mb-4">
-              Password
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="Password"
-              />
-            </label>
-          </Form.Item>
+            type="email"
+          />
+          <Textfield
+            name="Password"
+            rules={[
+              { required: true, message: PASSWORD_REQUIRED_PROMPT },
+              { min: 8, message: MIN_PASSWORD_PROMPT },
+              {
+                pattern: PASSWORD_PATTERN,
+                message: STRONG_PASSWORD_PROMPT,
+              },
+            ]}
+            type="password"
+          />
           <Form.Item className="text-end">
-            <a className="login-form-forgot text-md text-[#008080] hover:text-[#20b2aa]" href="#">
+            <p className="login-form-forgot text-md text-[#008080] hover:text-[#20b2aa]">
               Forgot password
-            </a>
+            </p>
           </Form.Item>
           <Form.Item>
             <div className="flex justify-between">
-              <Button htmlType="submit" className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20b2aa] hover:text-white w-1/3">
+              <Button
+                htmlType="submit"
+                className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20b2aa] hover:text-white w-1/3"
+              >
                 Log in
               </Button>
-              <a href="#" className="text-[#008080] hover:text-[#20b2aa]">Register Now!</a>
+              <p className="text-[#008080] hover:text-[#20b2aa]">
+                Register Now!
+              </p>
             </div>
           </Form.Item>
         </Form>
