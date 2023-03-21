@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Modal, Form, Input, DatePicker, Button, Table
 } from 'antd';
+import './MyRangePicker.css'; // import your custom CSS file
 import 'tailwindcss/tailwind.css';
 
 const { RangePicker } = DatePicker;
@@ -61,7 +62,11 @@ function Meetings() {
             <Input placeholder="Meeting Title" />
           </Form.Item>
           <Form.Item name="dateTime" rules={[{ required: true, message: 'Please select a date and time!' }]}>
-            <RangePicker showTime format="YYYY-MM-DD h:mm a" />
+            <RangePicker
+              dropdownClassName="custom-range-picker"
+              showTime
+              format="YYYY-MM-DD h:mm a"
+            />
           </Form.Item>
           <div className="flex justify-end">
             <Button type="primary" htmlType="submit" className="mr-2 border-[#008080] bg-[#008080] text-white">Schedule</Button>

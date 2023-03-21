@@ -1,12 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-console */
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import {
-  Button, Form, Input,
+  Button, Form,
 } from 'antd';
+import Textfield from '../shared/TextField';
 
 function EditProfile() {
   const onFinish = (values) => {
@@ -22,19 +20,18 @@ function EditProfile() {
           initialValues={{ remember: true }}
           onFinish={onFinish}
         >
-          <Form.Item
-            name="name"
+          <Textfield
+            name="Name"
+            type="name"
+            prefix={<UserOutlined className="site-form-item-icon" />}
             rules={[{
               required: true, message: 'Please input your Full Name.',
             }]}
-          >
-            <label className="block text-left text-gray-700 text-sm font-bold mb-4">
-              Full Name
-              <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Full Name" />
-            </label>
-          </Form.Item>
-          <Form.Item
-            name="password"
+          />
+          <Textfield
+            name="Password"
+            type="password"
+            prefix={<LockOutlined className="site-form-item-icon" />}
             rules={[{ required: true, message: 'Please input your Password!' },
               { min: 8, message: 'Password must be minimum 8 characters.' },
               {
@@ -42,32 +39,15 @@ function EditProfile() {
                 message: 'Password Pattern',
               },
             ]}
-          >
-            <label className="block text-left text-gray-700 text-sm font-bold mb-4">
-              Password
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="Password"
-              />
-            </label>
-          </Form.Item>
-          <Form.Item
-            name="confirm_password"
-            dependencies={['password']}
+          />
+          <Textfield
+            name="Confirm Password"
+            type="password"
+            prefix={<LockOutlined className="site-form-item-icon" />}
             rules={[{ required: true, message: 'Please input your Confirm Password!' },
               { min: 8, message: 'Password must be minimum 8 characters.' },
             ]}
-          >
-            <label className="block text-left text-gray-700 text-sm font-bold mb-4">
-              Confirm Password
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="Confirm Password"
-              />
-            </label>
-          </Form.Item>
+          />
           <Form.Item
             name="generic_slots"
             rules={[{ required: true, message: '' },
@@ -79,10 +59,10 @@ function EditProfile() {
           </Form.Item>
           <Form.Item>
             <div className="flex justify-between">
-              <Button htmlType="submit" className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20b2aa] hover:text-white w-2/">
+              <Button htmlType="submit" className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20b2aa] hover:text-white w-2/4">
                 Save Changes
               </Button>
-              <a href="#" className="text-[#008080] hover:text-[#20b2aa]">Cancel</a>
+              <p className="text-[#008080] hover:text-[#20b2aa]">Cancel</p>
             </div>
           </Form.Item>
         </Form>

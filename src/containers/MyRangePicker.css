@@ -1,0 +1,8 @@
+.custom-range-picker .ant-picker-ok {
+    background-color: #008080 !important;
+    border-color: #008080 !important;
+    color: #fff !important;
+  }
+  .custom-range-picker .ant-picker-ok:hover {
+    background-color: #008080 !important;
+  }
