@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
@@ -9,6 +8,8 @@ import ForgotPassword from './containers/ForgotPassword';
 import Login from './containers/Login';
 import Register from './containers/Register';
 import Meetings from './containers/Meetings';
+import EditProfile from './containers/EditProfile';
+import SettingPage from './containers/Settings';
 
 const { Content } = Layout;
 
@@ -35,19 +36,13 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/meetings" element={<Meetings />} />
+              <Route path="/editprofile" element={<EditProfile />} />
+              <Route path="/settings" element={<SettingPage />} />
             </Routes>
           </Content>
         </Layout>
       </BrowserRouter>
     </div>
-=======
-import React from 'react';
-import Register from './containers/Register';
-
-function App() {
-  return (
-    <Register />
->>>>>>> master
   );
 }
 
