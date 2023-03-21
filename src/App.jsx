@@ -9,6 +9,7 @@ import Login from './containers/Login';
 import Register from './containers/Register';
 import Meetings from './containers/Meetings';
 import Dashboard from './containers/Dashboard';
+import Feedback from './containers/Feedback';
 
 const { Content } = Layout;
 
@@ -36,6 +37,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/meetings" element={<Meetings />} />
+              <Route path="/feedback" element={<Feedback />} />
             </Routes>
           </Content>
         </Layout>
