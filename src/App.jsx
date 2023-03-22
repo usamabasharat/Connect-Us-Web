@@ -8,6 +8,7 @@ import ForgotPassword from './containers/ForgotPassword';
 import Login from './containers/Login';
 import Register from './containers/Register';
 import Meetings from './containers/Meetings';
+import Questions from './containers/Questions';
 import Dashboard from './containers/Dashboard';
 import Feedback from './containers/Feedback';
 
@@ -37,6 +38,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/meetings" element={<Meetings />} />
+              <Route path="/questions" element={<Questions />} />
               <Route path="/feedback" element={<Feedback />} />
             </Routes>
           </Content>
