@@ -8,6 +8,8 @@ import ForgotPassword from './containers/ForgotPassword';
 import Login from './containers/Login';
 import Register from './containers/Register';
 import Meetings from './containers/Meetings';
+import EditProfile from './containers/EditProfile';
+import SettingPage from './containers/Settings';
 import Questions from './containers/Questions';
 import Dashboard from './containers/Dashboard';
 import Feedback from './containers/Feedback';
@@ -38,6 +40,8 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/meetings" element={<Meetings />} />
+              <Route path="/editprofile" element={<EditProfile />} />
+              <Route path="/settings" element={<SettingPage />} />
               <Route path="/questions" element={<Questions />} />
               <Route path="/feedback" element={<Feedback />} />
             </Routes>

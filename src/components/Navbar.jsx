@@ -19,17 +19,8 @@ function Navbar({ onMenuExpand }) {
       <Menu.Item key="profile" icon={<UserOutlined />}>
         Profile
       </Menu.Item>
-      <Menu.Item key="register" icon={<UserOutlined />}>
-        <Link to="/">Register</Link>
-      </Menu.Item>
-      <Menu.Item key="login" icon={<UserOutlined />}>
-        <Link to="/login">Login</Link>
-      </Menu.Item>
-      <Menu.Item key="password" icon={<UserOutlined />}>
-        <Link to="/forgotpassword">Password</Link>
-      </Menu.Item>
       <Menu.Item key="settings" icon={<SettingOutlined />}>
-        Settings
+        <Link to="/settings">Settings</Link>
       </Menu.Item>
     </Menu>
   );
