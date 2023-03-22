@@ -6,3 +6,4 @@ export const PASSWORD_REQUIRED_PROMPT = 'Please input your Password!';
 export const MIN_PASSWORD_PROMPT = 'Password must be minimum 8 characters.';
 export const STRONG_PASSWORD_PROMPT = 'Password not strong enough!';
 export const PASSWORD_DOES_NOT_MATCH_PROMPT = 'Passwords do not match!';
+export const QUESTION_REQUIRED = 'Please input your question!';

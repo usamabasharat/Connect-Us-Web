@@ -8,6 +8,7 @@ import ForgotPassword from './containers/ForgotPassword';
 import Login from './containers/Login';
 import Register from './containers/Register';
 import Meetings from './containers/Meetings';
+import Questions from './containers/Questions';
 
 const { Content } = Layout;
 
@@ -34,6 +35,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/meetings" element={<Meetings />} />
+              <Route path="/questions" element={<Questions />} />
             </Routes>
           </Content>
         </Layout>
