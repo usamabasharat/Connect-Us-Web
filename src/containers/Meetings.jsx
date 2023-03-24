@@ -53,7 +53,7 @@ function Meetings() {
       <Table columns={columns} dataSource={meetings} />
       <Modal
         title="Schedule Meeting"
-        visible={visible}
+        open={visible}
         onCancel={handleCancel}
         footer={null}
       >
