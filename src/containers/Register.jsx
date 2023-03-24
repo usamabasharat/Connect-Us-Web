@@ -3,6 +3,7 @@ import {
   FrownOutlined, SmileOutlined, LockOutlined, UserOutlined, PhoneOutlined, MailOutlined
 } from '@ant-design/icons';
 import { Button, Form, notification } from 'antd';
+import { Link } from 'react-router-dom';
 import { updateUsers, credentials } from '../constants/credentials';
 import Textfield from '../shared/TextField';
 import { NUMBER_PATTERN, PASSWORD_PATTERN } from '../constants/pattern';
@@ -150,9 +151,9 @@ function Register() {
               >
                 Sign up
               </Button>
-              <div href="#" className="text-[#008080] hover:text-[#20b2aa]">
+              <Link to="/login" className="text-[#008080] hover:text-[#20b2aa]">
                 Already a user Sign in
-              </div>
+              </Link>
             </div>
           </Form.Item>
         </Form>
