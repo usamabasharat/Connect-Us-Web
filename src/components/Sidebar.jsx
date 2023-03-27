@@ -1,7 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { Menu, Drawer } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { UserOutlined, SettingOutlined, EditOutlined } from '@ant-design/icons';
 
 function Sidebar({ isMenuVisible, hideDrawer }) {
@@ -30,7 +29,10 @@ function Sidebar({ isMenuVisible, hideDrawer }) {
     <Drawer
       className="ant-layout-sider-dark"
       placement="left"
-      onClose={hideDrawer}
+      onClose={() => {
+        <Link to="/"> </Link>;
+        hideDrawer();
+      }}
       open={isMenuVisible}
       width={200}
     >

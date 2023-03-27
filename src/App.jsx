@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter, Routes, Route,
+} from 'react-router-dom';
 import './App.css';
 import { Layout } from 'antd';
 import Navbar from './components/Navbar';
