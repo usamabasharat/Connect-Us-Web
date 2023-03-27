@@ -62,7 +62,14 @@ function Meetings() {
     <div className="p-8">
       <div className="mb-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold">Meetings Scheduler</h1>
-        <Button type="primary" className="border-[#008080] bg-[#008080] text-white hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]" onClick={() => setVisible(true)}>Schedule Meeting</Button>
+        <Button
+          htmlType="submit"
+          className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
+          onClick={() => setVisible(true)}
+        >
+          Schedule Meeting
+
+        </Button>
       </div>
       <Table columns={columns} dataSource={meetings} />
       <Modal
@@ -90,7 +97,13 @@ function Meetings() {
             </Select>
           </Form.Item>
           <div className="flex justify-end">
-            <Button type="primary" htmlType="submit" className="mr-2 border-[#008080] bg-[#008080] text-white">Schedule</Button>
+            <Button
+              htmlType="submit"
+              className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
+            >
+              Schedule
+
+            </Button>
             <Button onClick={handleCancel}>Cancel</Button>
           </div>
         </Form>

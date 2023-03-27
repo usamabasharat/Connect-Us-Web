@@ -51,7 +51,10 @@ function Feedback() {
       <div className="m-auto w-1/4 border-2 rounded-md p-5 space-y-10 bg-white">
         <Form form={form} onFinish={onFinish}>
           {feedbackData.map((feedback) => renderField(feedback))}
-          <Button type="primary" htmlType="submit" className="bg-black">
+          <Button
+            htmlType="submit"
+            className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
+          >
             Submit
           </Button>
         </Form>
