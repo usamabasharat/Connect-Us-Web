@@ -60,7 +60,8 @@ function Login() {
               >
                 Log in
               </Button>
-              <Link to="/" className="text-[#008080] hover:text-[#20b2aa]">
+              <Link to="/register" className="text-[#008080] hover:text-[#20b2aa]">
+
                 Register Now!
               </Link>
             </div>

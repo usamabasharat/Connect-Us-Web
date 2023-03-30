@@ -14,7 +14,7 @@ function Settings() {
   return (
     <div className="flex h-screen">
       <div className="m-auto w-1/4 border-2 rounded-md p-5 space-y-10 bg-white">
-        <h1 className="text-[#008080] text-3xl font-bold mb-8">Settings</h1>
+        <h1 className="text-[#008080] text-3xl">Settings</h1>
         <Form
           name="settings-form"
           onFinish={onFinish}
