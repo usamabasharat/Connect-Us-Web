@@ -45,6 +45,7 @@ function Navbar({ onMenuExpand }) {
   ];
   return (
     <Menu theme="light" mode="horizontal" className="border-[#008080] bg-[#008080] text-white active:!text-black" items={MenuList} onClick={onSelectMenu} />
-  );
+    },
+  ];
 }
 export default Navbar;
