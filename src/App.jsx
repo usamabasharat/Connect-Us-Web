@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter, Routes, Route,
+} from 'react-router-dom';
 import './App.css';
 import { Layout } from 'antd';
 import Navbar from './components/Navbar';
@@ -13,6 +15,7 @@ import SettingPage from './containers/Settings';
 import Questions from './containers/Questions';
 import Dashboard from './containers/Dashboard';
 import Feedback from './containers/Feedback';
+import Profile from './containers/Profile';
 
 const { Content } = Layout;
 
@@ -29,21 +32,32 @@ function App() {
 
   return (
     <div className="App">
+
+      <BrowserRouter>
+        <Layout>
+          <Content>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route exact path="/register" element={<Register />} />
+              <Route path="/forgotpassword" element={<ForgotPassword />} />
+            </Routes>
+          </Content>
+        </Layout>
+      </BrowserRouter>
+
       <BrowserRouter>
         <Layout>
           <Navbar onMenuExpand={showDrawer} />
           <Sidebar isMenuVisible={isMenuVisible} hideDrawer={hideDrawer} />
           <Content>
             <Routes>
-              <Route exact path="/" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/forgotpassword" element={<ForgotPassword />} />
+              <Route path="/" element={<Dashboard />} />
               <Route path="/meetings" element={<Meetings />} />
               <Route path="/editprofile" element={<EditProfile />} />
               <Route path="/settings" element={<SettingPage />} />
               <Route path="/questions" element={<Questions />} />
               <Route path="/feedback" element={<Feedback />} />
+              <Route path="/profile" element={<Profile />} />
             </Routes>
           </Content>
         </Layout>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form } from 'antd';
+import { Link } from 'react-router-dom';
 import Textfield from '../shared/TextField';
 import { PASSWORD_PATTERN } from '../constants/pattern';
 import {
@@ -51,21 +52,21 @@ function Login() {
             type="password"
           />
           <Form.Item className="text-end">
-            <p className="login-form-forgot text-md text-[#008080] hover:text-[#20b2aa]">
+            <Link to="/forgotpassword" className="login-form-forgot text-md text-[#008080] hover:text-[#20b2aa]">
               Forgot password
-            </p>
+            </Link>
           </Form.Item>
           <Form.Item>
             <div className="flex justify-between">
               <Button
                 htmlType="submit"
-                className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20b2aa] hover:text-white w-1/3"
+                className="w-1/3 login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
               >
                 Log in
               </Button>
-              <p className="text-[#008080] hover:text-[#20b2aa]">
+              <Link to="/register" className="text-[#008080] hover:text-[#20b2aa]">
                 Register Now!
-              </p>
+              </Link>
             </div>
           </Form.Item>
         </Form>

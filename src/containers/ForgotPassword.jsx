@@ -3,7 +3,7 @@ import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import {
   Button, Form,
 } from 'antd';
-import 'tailwindcss/tailwind.css';
+import { Link } from 'react-router-dom';
 import Textfield from '../shared/TextField';
 import {
   VALID_EMAIL_PROMPT,
@@ -71,10 +71,10 @@ function ForgotPassword() {
           />
           <Form.Item>
             <div className="flex justify-between">
-              <Button htmlType="submit" className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20b2aa] hover:text-white w-2/4">
+              <Button htmlType="submit" className="w-2/3 login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]">
                 Reset Password
               </Button>
-              <p className="text-[#008080] hover:text-[#20b2aa]">Login Now!</p>
+              <Link to="/login" className="text-[#008080] hover:text-[#20b2aa]">Login Now!</Link>
             </div>
           </Form.Item>
         </Form>

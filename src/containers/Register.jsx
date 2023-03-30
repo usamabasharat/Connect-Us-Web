@@ -3,6 +3,7 @@ import {
   FrownOutlined, SmileOutlined, LockOutlined, UserOutlined, PhoneOutlined, MailOutlined
 } from '@ant-design/icons';
 import { Button, Form, notification } from 'antd';
+import { Link } from 'react-router-dom';
 import { updateUsers, credentials } from '../constants/credentials';
 import Textfield from '../shared/TextField';
 import { NUMBER_PATTERN, PASSWORD_PATTERN } from '../constants/pattern';
@@ -146,13 +147,13 @@ function Register() {
             <div className="flex justify-between">
               <Button
                 htmlType="submit"
-                className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20b2aa] hover:text-white w-1/3"
+                className="w-1/3 login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
               >
                 Sign up
               </Button>
-              <div href="#" className="text-[#008080] hover:text-[#20b2aa]">
+              <Link to="/login" className="text-[#008080] hover:text-[#20b2aa]">
                 Already a user Sign in
-              </div>
+              </Link>
             </div>
           </Form.Item>
         </Form>
