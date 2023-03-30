@@ -6,8 +6,46 @@ import feedbackData from '../constants/feedbackdata';
 
 function Feedback() {
   const [form] = Form.useForm();
+
   const onFinish = (formData) => {
     console.log('Received values of form: ', formData);
+  };
+
+  const renderField = (field) => {
+    switch (field.feedback_type) {
+      case 'text_field':
+        return (
+          <Form.Item key={field.title} name={field.title} label={field.title}>
+            <Input />
+          </Form.Item>
+        );
+      case 'radio':
+        return (
+          <Form.Item key={field.title} name={field.title} label={field.title}>
+            <Radio.Group>
+              {field.options.map((option) => (
+                <Radio key={option} value={option}>
+                  {option}
+                </Radio>
+              ))}
+            </Radio.Group>
+          </Form.Item>
+        );
+      case 'select':
+        return (
+          <Form.Item key={field.title} name={field.title} label={field.title}>
+            <Select>
+              {field.options.map((option) => (
+                <Select.Option key={option} value={option}>
+                  {option}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        );
+      default:
+        return null;
+    }
   };
 
   const renderField = (field) => {
