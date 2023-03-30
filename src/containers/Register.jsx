@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { useState } from 'react';
 import {
   FrownOutlined, SmileOutlined, LockOutlined, UserOutlined, PhoneOutlined, MailOutlined
@@ -18,8 +19,9 @@ import {
 import {
   SIGNUP_SUCCESS,
   SINGUP_FAIL_EMAIL,
-  SINGUP_FAIL_PASSWORD
+  // SINGUP_FAIL_PASSWORD
 } from '../constants/notifications';
+import PostData from '../apis/api';
 
 /*
   @Register Function
@@ -28,7 +30,7 @@ import {
 function Register() {
   const [users, setUsers] = useState(credentials);
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     if (values.Password === values.ReEnterPassword) {
       let hasMatch = false;
       for (let i = 0; i < credentials.length; i += 1) {
@@ -40,6 +42,7 @@ function Register() {
         const newUser = { email: values.Email, password: values.Password };
         setUsers(...users, newUser);
         updateUsers(newUser);
+        console.log(newUser);
         notification.open({
           message: 'Success',
           description: SIGNUP_SUCCESS,
@@ -53,11 +56,20 @@ function Register() {
         });
       }
     } else {
-      notification.open({
-        message: 'Error',
-        description: SINGUP_FAIL_PASSWORD,
-        icon: <FrownOutlined style={{ color: '#108ee9' }} />
-      });
+      delete values.Confirm_Password;
+      values.role = 'admin';
+      values.designation = 'ase';
+      console.log(values);
+      const response = await PostData('users/', values);
+      const data = await response.json();
+      console.log(data);
+      // const data = await response.json();
+      // console.log(data);
+      // notification.open({
+      //   message: 'Error',
+      //   description: SINGUP_FAIL_PASSWORD,
+      //   icon: <FrownOutlined style={{ color: '#108ee9' }} />
+      // });
     }
   };
 
@@ -130,7 +142,7 @@ function Register() {
             prefix={<LockOutlined className="site-form-item-icon" />}
           />
           <Textfield
-            name="Confirm Password"
+            name="Confirm_Password"
             rules={[
               { required: true, message: PASSWORD_REQUIRED_PROMPT },
               { min: 8, message: MIN_PASSWORD_PROMPT },
