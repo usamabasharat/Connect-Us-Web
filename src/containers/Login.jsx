@@ -9,7 +9,7 @@ import {
   MIN_PASSWORD_PROMPT,
   STRONG_PASSWORD_PROMPT,
 } from '../constants/messages';
-import GetData from '../apis/api';
+import { GetData } from '../API/api';
 
 function Login() {
   const onFinish = async (values) => {
