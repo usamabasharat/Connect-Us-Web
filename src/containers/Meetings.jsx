@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import {
-  Modal, Form, Input, DatePicker, Button, Table
+  Modal, Form, Input, DatePicker, Button, Table, Select
 } from 'antd';
 import './MyRangePicker.css'; // import your custom CSS file
 import 'tailwindcss/tailwind.css';
 
 const { RangePicker } = DatePicker;
+const { Option } = Select;
 
 const columns = [
   {
@@ -19,9 +20,20 @@ const columns = [
     key: 'date',
   },
   {
-    title: 'Time',
-    dataIndex: 'time',
-    key: 'time',
+    title: 'Start Time',
+    dataIndex: 'start_time',
+    key: 'start_time',
+  },
+  {
+    title: 'End Time',
+    dataIndex: 'end_time',
+    key: 'end_time',
+  },
+  {
+    title: 'Attendees',
+    dataIndex: 'attendees',
+    key: 'attendees',
+    render: (attendees) => <span>{attendees.join(', ')}</span>,
   },
 ];
 
@@ -31,10 +43,12 @@ function Meetings() {
   const [meetings, setMeetings] = useState([]);
 
   const onFinish = (values) => {
-    const { title, dateTime } = values;
-    const [date, time] = dateTime;
+    const { title, dateTime, attendees } = values;
+    const [start, end] = dateTime;
 
-    setMeetings([...meetings, { title, date: date.format('YYYY-MM-DD'), time: time.format('h:mm a') }]);
+    setMeetings([...meetings, {
+      title, date: start.format('YYYY-MM-DD'), start_time: start.format('h:mm a'), end_time: end.format('h:mm a'), attendees
+    }]);
     setVisible(false);
     form.resetFields();
   };
@@ -48,7 +62,14 @@ function Meetings() {
     <div className="p-8">
       <div className="mb-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold">Meetings Scheduler</h1>
-        <Button type="primary" className="border-[#008080] bg-[#008080] text-white" onClick={() => setVisible(true)}>Schedule Meeting</Button>
+        <Button
+          htmlType="submit"
+          className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
+          onClick={() => setVisible(true)}
+        >
+          Schedule Meeting
+
+        </Button>
       </div>
       <Table columns={columns} dataSource={meetings} />
       <Modal
@@ -64,12 +85,25 @@ function Meetings() {
           <Form.Item name="dateTime" rules={[{ required: true, message: 'Please select a date and time!' }]}>
             <RangePicker
               dropdownClassName="custom-range-picker"
-              showTime
+              showTime={{ format: 'h:mm a' }}
               format="YYYY-MM-DD h:mm a"
             />
           </Form.Item>
+          <Form.Item name="attendees" rules={[{ required: true, message: 'Please select at least one attendee!' }]}>
+            <Select mode="tags" placeholder="Attendees">
+              <Option value="John">John</Option>
+              <Option value="Jane">Jane</Option>
+              <Option value="Doe">Doe</Option>
+            </Select>
+          </Form.Item>
           <div className="flex justify-end">
-            <Button type="primary" htmlType="submit" className="mr-2 border-[#008080] bg-[#008080] text-white">Schedule</Button>
+            <Button
+              htmlType="submit"
+              className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
+            >
+              Schedule
+
+            </Button>
             <Button onClick={handleCancel}>Cancel</Button>
           </div>
         </Form>

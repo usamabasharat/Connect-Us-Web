@@ -13,33 +13,39 @@ function Navbar({ onMenuExpand }) {
   };
   const MenuList = [
     {
-      // key: '/questions',
+      key: '/',
       icon: <MenuOutlined />,
+      className: 'focus:!text-black after:!border-b-0',
       onClick: onMenuExpand
     },
     {
       key: '/',
       label: 'Dashboard',
       icon: <DashboardOutlined />,
+      className: 'focus:!text-black after:!border-b-0',
     },
     {
       key: '/meetings',
       label: 'Meetings',
       icon: <TeamOutlined />,
+      className: 'focus:!text-black after:!border-b-0',
     },
     {
       key: '/questions',
       label: 'Questions',
       icon: <QuestionCircleOutlined />,
+      className: 'focus:!text-black after:!border-b-0',
     },
     {
       key: '/feedback',
       label: 'Feedback',
       icon: <MessageOutlined />,
+      className: 'focus:!text-black after:!border-b-0',
     },
   ];
   return (
-    <Menu theme="light" mode="horizontal" className="border-[#008080] bg-[#008080] text-white" items={MenuList} onClick={onSelectMenu} />
-  );
+    <Menu theme="light" mode="horizontal" className="border-[#008080] bg-[#008080] text-white active:!text-black" items={MenuList} onClick={onSelectMenu} />
+    },
+  ];
 }
 export default Navbar;

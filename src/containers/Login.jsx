@@ -56,12 +56,11 @@ function Login() {
             <div className="flex justify-between">
               <Button
                 htmlType="submit"
-                className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20b2aa] hover:text-white w-1/3"
+                className="w-1/3 login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
               >
                 Log in
               </Button>
               <Link to="/register" className="text-[#008080] hover:text-[#20b2aa]">
-
                 Register Now!
               </Link>
             </div>
