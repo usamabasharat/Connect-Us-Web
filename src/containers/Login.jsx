@@ -8,10 +8,14 @@ import {
   MIN_PASSWORD_PROMPT,
   STRONG_PASSWORD_PROMPT,
 } from '../constants/messages';
+import GetData from '../apis/api';
 
 function Login() {
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log('Received values of form: ', values);
+    const response = await GetData('users/');
+    const data = await response.json();
+    console.log(data);
   };
 
   return (
