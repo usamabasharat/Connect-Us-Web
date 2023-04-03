@@ -21,8 +21,8 @@ import {
 } from '../constants/messages';
 import {
   SIGNUP_SUCCESS,
-  SINGUP_FAIL_EMAIL,
-  SINGUP_FAIL_PASSWORD
+  SIGNUP_FAIL_EMAIL,
+  SIGNUP_FAIL_PASSWORD
 } from '../constants/notifications';
 import { PostData } from '../API/api';
 
@@ -59,14 +59,14 @@ function Register() {
       } else {
         notification.open({
           message: 'Error',
-          description: SINGUP_FAIL_EMAIL,
+          description: SIGNUP_FAIL_EMAIL,
           icon: <FrownOutlined style={{ color: '#108ee9' }} />
         });
       }
     } else {
       notification.open({
         message: 'Error',
-        description: SINGUP_FAIL_PASSWORD,
+        description: SIGNUP_FAIL_PASSWORD,
         icon: <FrownOutlined style={{ color: '#108ee9' }} />
       });
     }
