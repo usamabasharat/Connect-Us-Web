@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import {
   FrownOutlined, SmileOutlined, LockOutlined, UserOutlined, PhoneOutlined, MailOutlined
 } from '@ant-design/icons';
-import { Button, Form, notification } from 'antd';
+import {
+  Button, Form, notification, Select
+} from 'antd';
+
 import { Link } from 'react-router-dom';
 import { updateUsers, credentials } from '../constants/credentials';
 import Textfield from '../shared/TextField';
@@ -21,6 +24,9 @@ import {
   SINGUP_FAIL_EMAIL,
   SINGUP_FAIL_PASSWORD
 } from '../constants/notifications';
+import { PostData } from '../API/api';
+
+const { Option } = Select;
 
 /*
   @Register Function
@@ -29,7 +35,7 @@ import {
 function Register() {
   const [users, setUsers] = useState(credentials);
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     if (values.Password === values.ReEnterPassword) {
       let hasMatch = false;
       for (let i = 0; i < credentials.length; i += 1) {
@@ -41,6 +47,10 @@ function Register() {
         const newUser = { email: values.Email, password: values.Password };
         setUsers(...users, newUser);
         updateUsers(newUser);
+        console.log(`Values: ${JSON.stringify(values)}`);
+        const response = await PostData('users/', values);
+        const data = await response.json();
+        console.log(data);
         notification.open({
           message: 'Success',
           description: SIGNUP_SUCCESS,
@@ -65,7 +75,7 @@ function Register() {
   return (
     <div className="flex h-screen">
       <div className="m-auto w-1/4 border-2 rounded-md p-5 space-y-10 bg-white">
-        <h1 className="text-[#008080] text-3xl font-bold mb-8">SignUp</h1>
+        <h1 className="text-[#008080] text-3xl font-bold">SignUp</h1>
         <Form
           name="normal_login"
           className="login-form"
@@ -73,7 +83,9 @@ function Register() {
           onFinish={onFinish}
         >
           <Textfield
-            name="FirstName"
+            name="first_name"
+            labelText="First Name"
+            placeholder="Enter your First Name"
             rules={[
               {
                 required: true,
@@ -84,7 +96,9 @@ function Register() {
             prefix={<UserOutlined className="site-form-item-icon" />}
           />
           <Textfield
-            name="LastName"
+            name="last_name"
+            labelText="Last Name"
+            placeholder="Enter your Last Name"
             rules={[
               {
                 required: true,
@@ -95,7 +109,9 @@ function Register() {
             prefix={<UserOutlined className="site-form-item-icon" />}
           />
           <Textfield
-            name="Number"
+            name="phone"
+            labelText="Phone Number"
+            placeholder="Enter your Phone Number"
             rules={[
               {
                 required: true,
@@ -107,7 +123,9 @@ function Register() {
             prefix={<PhoneOutlined className="site-form-item-icon" />}
           />
           <Textfield
-            name="Email"
+            name="email"
+            labelText="Email"
+            placeholder="Enter your Email"
             rules={[
               {
                 required: true,
@@ -118,7 +136,9 @@ function Register() {
             prefix={<MailOutlined className="site-form-item-icon" />}
           />
           <Textfield
-            name="Password"
+            name="password"
+            labelText="Password"
+            placeholder="Enter Password"
             rules={[
               { required: true, message: PASSWORD_REQUIRED_PROMPT },
               { min: 8, message: MIN_PASSWORD_PROMPT },
@@ -131,7 +151,9 @@ function Register() {
             prefix={<LockOutlined className="site-form-item-icon" />}
           />
           <Textfield
-            name="Confirm Password"
+            name="confirm_password"
+            labelText="Confirm Password"
+            placeholder="Enter Confirm Password"
             rules={[
               { required: true, message: PASSWORD_REQUIRED_PROMPT },
               { min: 8, message: MIN_PASSWORD_PROMPT },
@@ -143,6 +165,43 @@ function Register() {
             type="password"
             prefix={<LockOutlined className="site-form-item-icon" />}
           />
+          <Form.Item
+            label="Role"
+            name="role"
+            rules={[
+              {
+                required: true,
+                message: 'Please select your role!',
+              },
+            ]}
+          >
+            <Select placeholder="Select your role">
+              <Option value="admin">Admin</Option>
+              <Option value="superadmin">Super Admin</Option>
+              <Option value="manager">Manager</Option>
+              <Option value="user">User</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Designation"
+            name="designation"
+            rules={[
+              {
+                required: true,
+                message: 'Please select your designation!',
+              },
+            ]}
+          >
+            <Select placeholder="Select your designation">
+              <Option value="ase">ASE</Option>
+              <Option value="se">SE</Option>
+              <Option value="sse">SSE</Option>
+              <Option value="atl">ATL</Option>
+              <Option value="tl">TL</Option>
+              <Option value="apm">APM</Option>
+              <Option value="pm">PM</Option>
+            </Select>
+          </Form.Item>
           <Form.Item>
             <div className="flex justify-between">
               <Button

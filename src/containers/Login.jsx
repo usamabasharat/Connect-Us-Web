@@ -9,14 +9,14 @@ import {
   MIN_PASSWORD_PROMPT,
   STRONG_PASSWORD_PROMPT,
 } from '../constants/messages';
-import { GetData } from '../API/api';
+import { LoginUser } from '../API/api';
 
 function Login() {
   const onFinish = async (values) => {
     console.log('Received values of form: ', values);
-    const response = await GetData('users/');
-    const data = await response.json();
-    console.log(data);
+    const response = await LoginUser('users/login', values);
+    // const data = await response.json();
+    console.log(response);
   };
 
   return (
@@ -30,7 +30,9 @@ function Login() {
           onFinish={onFinish}
         >
           <Textfield
-            name="Email"
+            name="email"
+            labelText="Email"
+            placeholder="Enter your Email"
             rules={[
               {
                 required: true,
@@ -40,7 +42,9 @@ function Login() {
             type="email"
           />
           <Textfield
-            name="Password"
+            name="password"
+            labelText="Password"
+            placeholder="Enter your Password"
             rules={[
               { required: true, message: PASSWORD_REQUIRED_PROMPT },
               { min: 8, message: MIN_PASSWORD_PROMPT },

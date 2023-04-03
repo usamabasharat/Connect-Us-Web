@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  BrowserRouter, Routes, Route,
+  Routes, Route, useLocation
 } from 'react-router-dom';
 import './App.css';
 import { Layout } from 'antd';
@@ -30,38 +30,30 @@ function App() {
     setIsMenuVisible(false);
   };
 
+  const location = useLocation();
+  const hideNavbar = ['/login', '/register', '/forgotpassword'].includes(location.pathname);
+  const hideSidebar = ['/login', '/register', '/forgotpassword'].includes(location.pathname);
+
   return (
     <div className="App">
-
-      <BrowserRouter>
-        <Layout>
-          <Content>
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route exact path="/register" element={<Register />} />
-              <Route path="/forgotpassword" element={<ForgotPassword />} />
-            </Routes>
-          </Content>
-        </Layout>
-      </BrowserRouter>
-
-      <BrowserRouter>
-        <Layout>
-          <Navbar onMenuExpand={showDrawer} />
-          <Sidebar isMenuVisible={isMenuVisible} hideDrawer={hideDrawer} />
-          <Content>
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/meetings" element={<Meetings />} />
-              <Route path="/editprofile" element={<EditProfile />} />
-              <Route path="/settings" element={<SettingPage />} />
-              <Route path="/questions" element={<Questions />} />
-              <Route path="/feedback" element={<Feedback />} />
-              <Route path="/profile" element={<Profile />} />
-            </Routes>
-          </Content>
-        </Layout>
-      </BrowserRouter>
+      <Layout>
+        {!hideNavbar && <Navbar onMenuExpand={showDrawer} />}
+        {!hideSidebar && <Sidebar isMenuVisible={isMenuVisible} hideDrawer={hideDrawer} />}
+        <Content>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route exact path="/register" element={<Register />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/meetings" element={<Meetings />} />
+            <Route path="/editprofile" element={<EditProfile />} />
+            <Route path="/settings" element={<SettingPage />} />
+            <Route path="/questions" element={<Questions />} />
+            <Route path="/feedback" element={<Feedback />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+        </Content>
+      </Layout>
     </div>
   );
 }
