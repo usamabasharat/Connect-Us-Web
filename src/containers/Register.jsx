@@ -6,7 +6,7 @@ import {
   Button, Form, notification, Select
 } from 'antd';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Textfield from '../shared/TextField';
 import { NUMBER_PATTERN, PASSWORD_PATTERN } from '../constants/pattern';
 import {
@@ -17,7 +17,7 @@ import {
   PASSWORD_REQUIRED_PROMPT,
   MIN_PASSWORD_PROMPT,
   STRONG_PASSWORD_PROMPT,
-  PASSWORD_DOES_NOT_MATCH_PROMPT,
+  PASSWORD_DO_NOT_MATCH_PROMPT,
 } from '../constants/messages';
 import {
   SIGNUP_SUCCESS,
@@ -32,6 +32,8 @@ const { Option } = Select;
   Registers a new User and validates it.
 */
 function Register() {
+  const navigate = useNavigate();
+
   const onFinish = async (values) => {
     const response = await PostData('users/', values);
     const data = await response.json();
@@ -47,6 +49,7 @@ function Register() {
         description: SIGNUP_SUCCESS,
         icon: <SmileOutlined style={{ color: '#108ee9' }} />
       });
+      navigate('/');
     }
   };
 
@@ -144,7 +147,7 @@ function Register() {
                   if (!value || getFieldValue('password') === value) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(new Error(PASSWORD_DOES_NOT_MATCH_PROMPT));
+                  return Promise.reject(new Error(PASSWORD_DO_NOT_MATCH_PROMPT));
                 },
               }),
             ]}
