@@ -10,11 +10,18 @@ import {
   PASSWORD_REQUIRED_PROMPT,
   MIN_PASSWORD_PROMPT,
   STRONG_PASSWORD_PROMPT,
-  PASSWORD_DOES_NOT_MATCH_PROMPT
+  PASSWORD_DO_NOT_MATCH_PROMPT
 } from '../constants/messages';
 import { PASSWORD_PATTERN } from '../constants/pattern';
 
 function ForgotPassword() {
+  const onFinish = async (values) => {
+    console.log('Received values of form: ', values);
+    // const response = await LoginUser('users/login', values);
+    // const data = await response.json();
+    // console.log(response);
+  };
+
   return (
     <div className="flex h-screen">
       <div className="m-auto w-1/4 border-2 rounded-md p-5 space-y-10 bg-white">
@@ -23,10 +30,13 @@ function ForgotPassword() {
           name="normal_login"
           className="login-form"
           initialValues={{ remember: true }}
+          onFinish={onFinish}
         >
           <Textfield
-            name="Email"
+            name="email"
             type="email"
+            labelText="Email"
+            placeholder="Enter your email"
             prefix={<MailOutlined className="site-form-item-icon" />}
             rules={[
               {
@@ -36,8 +46,10 @@ function ForgotPassword() {
             ]}
           />
           <Textfield
-            name="Password"
+            name="password"
             type="password"
+            labelText="Password"
+            placeholder="Enter your password"
             prefix={<LockOutlined className="site-form-item-icon" />}
             rules={[
               { required: true, message: PASSWORD_REQUIRED_PROMPT },
@@ -51,6 +63,8 @@ function ForgotPassword() {
           <Textfield
             name="Confirm Password"
             type="password"
+            labelText="Confirm Password"
+            placeholder="Enter your confirm password"
             prefix={<LockOutlined className="site-form-item-icon" />}
             rules={[
               { required: true, message: PASSWORD_REQUIRED_PROMPT },
@@ -61,10 +75,10 @@ function ForgotPassword() {
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!value || getFieldValue('Password') === value) {
+                  if (!value || getFieldValue('password') === value) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(new Error(PASSWORD_DOES_NOT_MATCH_PROMPT));
+                  return Promise.reject(new Error(PASSWORD_DO_NOT_MATCH_PROMPT));
                 },
               }),
             ]}

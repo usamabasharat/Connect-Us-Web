@@ -1,6 +1,9 @@
 import React from 'react';
-import { Button, Form } from 'antd';
-import { Link } from 'react-router-dom';
+import { Button, Form, notification } from 'antd';
+import { useNavigate, Link } from 'react-router-dom';
+import {
+  FrownOutlined, SmileOutlined, MailOutlined, LockOutlined
+} from '@ant-design/icons';
 import Textfield from '../shared/TextField';
 import { PASSWORD_PATTERN } from '../constants/pattern';
 import {
@@ -8,21 +11,45 @@ import {
   PASSWORD_REQUIRED_PROMPT,
   MIN_PASSWORD_PROMPT,
   STRONG_PASSWORD_PROMPT,
+  INVALID_PASSWORD,
+  EMAIL_DOES_NOT_EXIST,
+  LOGIN_SUCCESS
 } from '../constants/messages';
 import { LoginUser } from '../API/api';
 
 function Login() {
+  const navigate = useNavigate();
+
   const onFinish = async (values) => {
     console.log('Received values of form: ', values);
     const response = await LoginUser('users/login', values);
-    // const data = await response.json();
-    console.log(response);
+    const data = await response.json();
+    if (data.user === 'Password does not match') {
+      notification.open({
+        message: 'Error',
+        description: INVALID_PASSWORD,
+        icon: <FrownOutlined style={{ color: '#108ee9' }} />
+      });
+    } else if (data.user === EMAIL_DOES_NOT_EXIST) {
+      notification.open({
+        message: 'Error',
+        description: EMAIL_DOES_NOT_EXIST,
+        icon: <FrownOutlined style={{ color: '#108ee9' }} />
+      });
+    } else {
+      notification.open({
+        message: 'Success',
+        description: LOGIN_SUCCESS,
+        icon: <SmileOutlined style={{ color: '#108ee9' }} />
+      });
+      navigate('/');
+    }
   };
 
   return (
     <div className="flex h-screen">
       <div className="m-auto w-1/4 border-2 rounded-md p-5 space-y-10 bg-white">
-        <h1 className="text-[#008080] text-3xl">Sign in to your account</h1>
+        <h1 className="text-[#008080] text-3xl">Log in</h1>
         <Form
           name="normal_login"
           className="login-form"
@@ -33,6 +60,7 @@ function Login() {
             name="email"
             labelText="Email"
             placeholder="Enter your Email"
+            prefix={<MailOutlined className="site-form-item-icon" />}
             rules={[
               {
                 required: true,
@@ -45,6 +73,7 @@ function Login() {
             name="password"
             labelText="Password"
             placeholder="Enter your Password"
+            prefix={<LockOutlined className="site-form-item-icon" />}
             rules={[
               { required: true, message: PASSWORD_REQUIRED_PROMPT },
               { min: 8, message: MIN_PASSWORD_PROMPT },

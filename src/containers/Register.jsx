@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   FrownOutlined, SmileOutlined, LockOutlined, UserOutlined, PhoneOutlined, MailOutlined
 } from '@ant-design/icons';
@@ -6,8 +6,7 @@ import {
   Button, Form, notification, Select
 } from 'antd';
 
-import { Link } from 'react-router-dom';
-import { updateUsers, credentials } from '../constants/credentials';
+import { Link, useNavigate } from 'react-router-dom';
 import Textfield from '../shared/TextField';
 import { NUMBER_PATTERN, PASSWORD_PATTERN } from '../constants/pattern';
 import {
@@ -18,6 +17,7 @@ import {
   PASSWORD_REQUIRED_PROMPT,
   MIN_PASSWORD_PROMPT,
   STRONG_PASSWORD_PROMPT,
+  PASSWORD_DO_NOT_MATCH_PROMPT,
 } from '../constants/messages';
 import {
   SIGNUP_SUCCESS,
@@ -33,7 +33,7 @@ const { Option } = Select;
   Registers a new User and validates it.
 */
 function Register() {
-  const [users, setUsers] = useState(credentials);
+  const navigate = useNavigate();
 
   const onFinish = async (values) => {
     if (values.Password === values.ReEnterPassword) {
@@ -160,7 +160,15 @@ function Register() {
               {
                 pattern: PASSWORD_PATTERN,
                 message: STRONG_PASSWORD_PROMPT
-              }
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error(PASSWORD_DO_NOT_MATCH_PROMPT));
+                },
+              }),
             ]}
             type="password"
             prefix={<LockOutlined className="site-form-item-icon" />}
