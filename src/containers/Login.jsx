@@ -37,6 +37,7 @@ function Login() {
         icon: <FrownOutlined style={{ color: '#108ee9' }} />
       });
     } else {
+      console.log(data.user);
       notification.open({
         message: 'Success',
         description: LOGIN_SUCCESS,
