@@ -4,7 +4,7 @@ import {
 } from 'antd';
 import { FrownOutlined, SmileOutlined } from '@ant-design/icons';
 import Textfield from '../shared/TextField';
-import { QUESTION_ADDED, QUESTION_REQUIRED, TEXT_REQUIRED } from '../constants/messages';
+import { QUESTION_ADDED, QUESTION_REQUIRED } from '../constants/messages';
 import { PostData } from '../API/api';
 
 function Questions() {
@@ -133,15 +133,6 @@ function Questions() {
               {Options}
             </Select>
           </Form.Item>
-        )}
-        {answerType === 'string' && (
-          <Textfield
-            name="Options"
-            labelText="Answer"
-            placeholder="Answer"
-            rules={[{ required: true, message: TEXT_REQUIRED }]}
-            type="text"
-          />
         )}
         {answerType !== 'string' && (
         <div className="mb-16 flex">
