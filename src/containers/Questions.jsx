@@ -12,19 +12,16 @@ function Questions() {
   const [answerType, setAnswerType] = useState('check');
   const [type, setQuestionType] = useState('');
   const [newOption, setNewOption] = useState();
-  const [questionsArray, setQuestionArray] = useState([
-    'Option 1',
-    'Option 2',
-    'Option 3',
-  ]);
+  const [answersArray, setAnswerArray] = useState([]);
 
   const handleSubmit = async (values) => {
     const createdBy = 4;
     if (typeof values.Options === 'string') {
-      values.Options = [values.Options];
+      answersArray.push(values.Options);
     }
     const question = {
       ...values,
+      answersArray,
       type,
       answerType,
       createdBy,
@@ -45,6 +42,7 @@ function Questions() {
       });
     }
     form.resetFields();
+    setAnswerArray([]);
   };
   const handleChange = (value) => {
     setAnswerType(value);
@@ -56,26 +54,26 @@ function Questions() {
     setQuestionType(value);
   };
   const addOption = () => {
-    setQuestionArray([...questionsArray, newOption]);
+    setAnswerArray([...answersArray, newOption]);
     setNewOption('');
   };
 
   let Options;
   if (answerType === 'boolean') {
-    Options = questionsArray.map((option) => (
-      <Radio className="block h-[30px]" key={questionsArray.indexOf(option)} value={option}>
+    Options = answersArray.map((option) => (
+      <Radio className="block h-[30px]" key={answersArray.indexOf(option)} value={option}>
         {option}
       </Radio>
     ));
   } else if (answerType === 'options') {
-    Options = questionsArray.map((option) => (
-      <Checkbox key={questionsArray.indexOf(option)} className="ml-2 h-[30px]" value={option}>
+    Options = answersArray.map((option) => (
+      <Checkbox key={answersArray.indexOf(option)} className="ml-2 h-[30px]" value={option}>
         {option}
       </Checkbox>
     ));
   } else {
-    Options = questionsArray.map((option) => (
-      <Select.Option className="ml-2 h-[30px]" key={questionsArray.indexOf(option)} value={option}>
+    Options = answersArray.map((option) => (
+      <Select.Option className="ml-2 h-[30px]" key={answersArray.indexOf(option)} value={option}>
         {option}
       </Select.Option>
     ));
@@ -118,17 +116,17 @@ function Questions() {
           </Select>
         </Form.Item>
         {answerType === 'boolean' && (
-        <Form.Item className="text-left" name="Options" label="Options" rules={[{ required: true }]}>
+        <Form.Item className="text-left" name="Options" label="Options">
           <Radio.Group>{Options}</Radio.Group>
         </Form.Item>
         )}
         {answerType === 'options' && (
-          <Form.Item className="text-left" name="Options" label="Options" rules={[{ required: true }]}>
+          <Form.Item className="text-left" name="Options" label="Options">
             <Checkbox.Group className="flex-col">{Options}</Checkbox.Group>
           </Form.Item>
         )}
         {answerType === 'numeric' && (
-          <Form.Item className="text-left" name="Options" label="Options" rules={[{ required: true }]}>
+          <Form.Item className="text-left" name="Options" label="Options">
             <Select
               className="mb-5 w-max"
             >
