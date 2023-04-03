@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   FrownOutlined, SmileOutlined, LockOutlined, UserOutlined, PhoneOutlined, MailOutlined
 } from '@ant-design/icons';
@@ -6,8 +6,7 @@ import {
   Button, Form, notification, Select
 } from 'antd';
 
-import { Link } from 'react-router-dom';
-import { updateUsers, credentials } from '../constants/credentials';
+import { Link, useNavigate } from 'react-router-dom';
 import Textfield from '../shared/TextField';
 import { NUMBER_PATTERN, PASSWORD_PATTERN } from '../constants/pattern';
 import {
@@ -18,11 +17,11 @@ import {
   PASSWORD_REQUIRED_PROMPT,
   MIN_PASSWORD_PROMPT,
   STRONG_PASSWORD_PROMPT,
+  PASSWORD_DO_NOT_MATCH_PROMPT,
 } from '../constants/messages';
 import {
   SIGNUP_SUCCESS,
   SINGUP_FAIL_EMAIL,
-  SINGUP_FAIL_PASSWORD
 } from '../constants/notifications';
 import { PostData } from '../API/api';
 
@@ -33,42 +32,24 @@ const { Option } = Select;
   Registers a new User and validates it.
 */
 function Register() {
-  const [users, setUsers] = useState(credentials);
+  const navigate = useNavigate();
 
   const onFinish = async (values) => {
-    if (values.Password === values.ReEnterPassword) {
-      let hasMatch = false;
-      for (let i = 0; i < credentials.length; i += 1) {
-        if (credentials[i].email === values.Email) {
-          hasMatch = true;
-        }
-      }
-      if (!hasMatch) {
-        const newUser = { email: values.Email, password: values.Password };
-        setUsers(...users, newUser);
-        updateUsers(newUser);
-        console.log(`Values: ${JSON.stringify(values)}`);
-        const response = await PostData('users/', values);
-        const data = await response.json();
-        console.log(data);
-        notification.open({
-          message: 'Success',
-          description: SIGNUP_SUCCESS,
-          icon: <SmileOutlined style={{ color: '#108ee9' }} />
-        });
-      } else {
-        notification.open({
-          message: 'Error',
-          description: SINGUP_FAIL_EMAIL,
-          icon: <FrownOutlined style={{ color: '#108ee9' }} />
-        });
-      }
-    } else {
+    const response = await PostData('users/', values);
+    const data = await response.json();
+    if (data.user === 'Email Already in Use') {
       notification.open({
         message: 'Error',
-        description: SINGUP_FAIL_PASSWORD,
+        description: SINGUP_FAIL_EMAIL,
         icon: <FrownOutlined style={{ color: '#108ee9' }} />
       });
+    } else {
+      notification.open({
+        message: 'Success',
+        description: SIGNUP_SUCCESS,
+        icon: <SmileOutlined style={{ color: '#108ee9' }} />
+      });
+      navigate('/');
     }
   };
 
@@ -160,7 +141,15 @@ function Register() {
               {
                 pattern: PASSWORD_PATTERN,
                 message: STRONG_PASSWORD_PROMPT
-              }
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error(PASSWORD_DO_NOT_MATCH_PROMPT));
+                },
+              }),
             ]}
             type="password"
             prefix={<LockOutlined className="site-form-item-icon" />}

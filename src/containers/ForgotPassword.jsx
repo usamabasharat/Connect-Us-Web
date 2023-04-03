@@ -10,7 +10,7 @@ import {
   PASSWORD_REQUIRED_PROMPT,
   MIN_PASSWORD_PROMPT,
   STRONG_PASSWORD_PROMPT,
-  PASSWORD_DOES_NOT_MATCH_PROMPT
+  PASSWORD_DO_NOT_MATCH_PROMPT
 } from '../constants/messages';
 import { PASSWORD_PATTERN } from '../constants/pattern';
 
@@ -64,7 +64,7 @@ function ForgotPassword() {
                   if (!value || getFieldValue('Password') === value) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(new Error(PASSWORD_DOES_NOT_MATCH_PROMPT));
+                  return Promise.reject(new Error(PASSWORD_DO_NOT_MATCH_PROMPT));
                 },
               }),
             ]}
