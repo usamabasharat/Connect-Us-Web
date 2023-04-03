@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form } from 'antd';
 import { Link } from 'react-router-dom';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import Textfield from '../shared/TextField';
 import { PASSWORD_PATTERN } from '../constants/pattern';
 import {
@@ -9,14 +10,14 @@ import {
   MIN_PASSWORD_PROMPT,
   STRONG_PASSWORD_PROMPT,
 } from '../constants/messages';
-import { LoginUser } from '../API/api';
+// import { LoginUser } from '../API/api';
 
 function Login() {
   const onFinish = async (values) => {
     console.log('Received values of form: ', values);
-    const response = await LoginUser('users/login', values);
+    // const response = await LoginUser('users/login', values);
     // const data = await response.json();
-    console.log(response);
+    // console.log(response);
   };
 
   return (
@@ -33,6 +34,7 @@ function Login() {
             name="email"
             labelText="Email"
             placeholder="Enter your Email"
+            prefix={<MailOutlined className="site-form-item-icon" />}
             rules={[
               {
                 required: true,
@@ -45,6 +47,7 @@ function Login() {
             name="password"
             labelText="Password"
             placeholder="Enter your Password"
+            prefix={<LockOutlined className="site-form-item-icon" />}
             rules={[
               { required: true, message: PASSWORD_REQUIRED_PROMPT },
               { min: 8, message: MIN_PASSWORD_PROMPT },
