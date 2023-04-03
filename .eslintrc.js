@@ -19,6 +19,7 @@ module.exports = {
     'prettier'
   ],
   rules: {
+    'no-param-reassign': [2, { props: false }],
     'import/no-extraneous-dependencies': 'off',
     'jsx-a11y/label-has-associated-control': [
       'warn',
