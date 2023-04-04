@@ -12,3 +12,4 @@ export const QUESTION_ADDED = 'Question Added Successfully';
 export const EMAIL_DOES_NOT_EXIST = 'Email does not exist';
 export const LOGIN_SUCCESS = 'Login Successfully';
 export const INVALID_PASSWORD = 'Invalid Password';
+export const PASSWORD_UPDATED = 'Password has been updated';
