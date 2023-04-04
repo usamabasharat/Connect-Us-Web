@@ -1,7 +1,9 @@
 import React from 'react';
-import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import {
-  Button, Form,
+  LockOutlined, MailOutlined, FrownOutlined, SmileOutlined
+} from '@ant-design/icons';
+import {
+  Button, Form, notification
 } from 'antd';
 import { Link } from 'react-router-dom';
 import Textfield from '../shared/TextField';
@@ -10,16 +12,36 @@ import {
   PASSWORD_REQUIRED_PROMPT,
   MIN_PASSWORD_PROMPT,
   STRONG_PASSWORD_PROMPT,
-  PASSWORD_DO_NOT_MATCH_PROMPT
+  PASSWORD_DO_NOT_MATCH_PROMPT,
+  // INVALID_PASSWORD,
+  EMAIL_DOES_NOT_EXIST,
+  PASSWORD_UPDATED
 } from '../constants/messages';
 import { PASSWORD_PATTERN } from '../constants/pattern';
+import { ForgotPasswordApi } from '../API/api';
 
 function ForgotPassword() {
+  // const navigate = useNavigate();
+
   const onFinish = async (values) => {
-    console.log('Received values of form: ', values);
-    // const response = await LoginUser('users/login', values);
-    // const data = await response.json();
-    // console.log(response);
+    const response = await ForgotPasswordApi('users/forgotpassword', values);
+
+    const data = await response.json();
+
+    if (data.user === EMAIL_DOES_NOT_EXIST) {
+      notification.open({
+        message: 'Error',
+        description: EMAIL_DOES_NOT_EXIST,
+        icon: <FrownOutlined style={{ color: '#108ee9' }} />
+      });
+    } else {
+      notification.open({
+        message: 'Success',
+        description: PASSWORD_UPDATED,
+        icon: <SmileOutlined style={{ color: '#108ee9' }} />
+      });
+      // navigate('/');
+    }
   };
 
   return (
