@@ -4,6 +4,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import {
   FrownOutlined, SmileOutlined, MailOutlined, LockOutlined
 } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../store/slices/userSlice';
 import Textfield from '../shared/TextField';
 import { PASSWORD_PATTERN } from '../constants/pattern';
 import {
@@ -19,9 +21,9 @@ import { LoginUser } from '../API/api';
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onFinish = async (values) => {
-    console.log('Received values of form: ', values);
     const response = await LoginUser('users/login', values);
     const data = await response.json();
     if (data.user === 'Password does not match') {
@@ -37,7 +39,7 @@ function Login() {
         icon: <FrownOutlined style={{ color: '#108ee9' }} />
       });
     } else {
-      console.log(data.user);
+      dispatch(loginSuccess(data.user));
       notification.open({
         message: 'Success',
         description: LOGIN_SUCCESS,
