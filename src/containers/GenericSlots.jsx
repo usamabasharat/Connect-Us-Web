@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Form, TimePicker, Button, notification, Select, Table
 } from 'antd';
@@ -12,9 +13,10 @@ function GenericSlots() {
   const location = useLocation();
   const update = location.state;
   const { RangePicker } = TimePicker;
+  const { user } = useSelector((state) => state.user);
   const [genericSlots, setGenericSlots] = useState();
   const [form] = Form.useForm();
-  const id = 1;
+  const Id = user.id;
   const date = (dateObj) => {
     const getTime = new Date(dateObj);
     return (getTime.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }));
@@ -45,7 +47,7 @@ function GenericSlots() {
     },
   ];
   const updateGenericSlot = () => {
-    GetData(`genericSlots/${id}`).then((promise) => setGenericSlots(promise));
+    GetData(`genericSlots/${Id}`).then((promise) => setGenericSlots(promise));
   };
   useEffect(() => {
     updateGenericSlot();

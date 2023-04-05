@@ -3,6 +3,7 @@ import {
   Form, Radio, Checkbox, Button, Select, Input, notification
 } from 'antd';
 import { FrownOutlined, SmileOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 import Textfield from '../shared/TextField';
 import { QUESTION_ADDED, QUESTION_REQUIRED } from '../constants/messages';
 import { PostData } from '../API/api';
@@ -13,9 +14,10 @@ function Questions() {
   const [type, setQuestionType] = useState('');
   const [newOption, setNewOption] = useState();
   const [answersArray, setAnswerArray] = useState([]);
+  const { user } = useSelector((state) => state.user);
 
   const handleSubmit = async (values) => {
-    const createdBy = 1;
+    const createdBy = user.id;
     if (typeof values.Options === 'string') {
       answersArray.push(values.Options);
     }
