@@ -16,6 +16,7 @@ import Questions from './containers/Questions';
 import Dashboard from './containers/Dashboard';
 import Feedback from './containers/Feedback';
 import Profile from './containers/Profile';
+import Calendar from './containers/Calendar';
 
 const { Content } = Layout;
 
@@ -51,6 +52,7 @@ function App() {
             <Route path="/questions" element={<Questions />} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/calendar" element={<Calendar />} />
           </Routes>
         </Content>
       </Layout>
