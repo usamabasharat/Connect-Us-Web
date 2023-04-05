@@ -15,3 +15,4 @@ export const INVALID_PASSWORD = 'Invalid Password';
 export const VALID_TIME = 'Please select time!';
 export const USER_UPDATED = 'User Updated Successfully';
 export const GENERIC_SLOT_ADDED = 'Generic Slot Successfully added';
+export const PASSWORD_UPDATED = 'Password has been updated';

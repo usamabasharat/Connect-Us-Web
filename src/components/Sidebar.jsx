@@ -1,17 +1,24 @@
 import React from 'react';
 import { Menu, Drawer } from 'antd';
+import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { UserOutlined, SettingOutlined, EditOutlined } from '@ant-design/icons';
 
 function Sidebar({ isMenuVisible, hideDrawer }) {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.user);
+  console.log(user);
+  let name = 'No name';
+
+  if (user) name = user.first_name;
+
   const onSelectMenu = (item) => {
     navigate(item.key);
   };
   const MenuList = [
     {
       key: '/profile',
-      label: 'Profile',
+      label: name,
       icon: <UserOutlined />
     },
     {
