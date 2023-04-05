@@ -5,8 +5,9 @@ import {
 import {
   Button, Form, notification, Select
 } from 'antd';
-
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { loginSuccess } from '../store/slices/userSlice';
 import Textfield from '../shared/TextField';
 import { NUMBER_PATTERN, PASSWORD_PATTERN } from '../constants/pattern';
 import {
@@ -33,6 +34,7 @@ const { Option } = Select;
 */
 function Register() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onFinish = async (values) => {
     const response = await PostData('users/', values);
@@ -44,6 +46,7 @@ function Register() {
         icon: <FrownOutlined style={{ color: '#108ee9' }} />
       });
     } else {
+      dispatch(loginSuccess(data.user));
       notification.open({
         message: 'Success',
         description: SIGNUP_SUCCESS,

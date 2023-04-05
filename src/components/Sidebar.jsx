@@ -7,6 +7,7 @@ import { UserOutlined, SettingOutlined, EditOutlined } from '@ant-design/icons';
 function Sidebar({ isMenuVisible, hideDrawer }) {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
+  console.log(user);
   let name = 'No name';
 
   if (user) name = user.first_name;
