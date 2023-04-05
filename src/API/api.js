@@ -1,4 +1,8 @@
-export const GetData = (route) => fetch(`${process.env.REACT_APP_BASEURL}${route}`);
+export const GetData = async (route) => {
+  const response = await fetch(`${process.env.REACT_APP_BASEURL}${route}`);
+  const data = await response.json();
+  return data;
+};
 
 export const GetDataByEmail = (route, email) => fetch(`${process.env.REACT_APP_BASEURL}${route}/${email}`);
 export const PostData = (route, values) => fetch(

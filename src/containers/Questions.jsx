@@ -15,7 +15,7 @@ function Questions() {
   const [answersArray, setAnswerArray] = useState([]);
 
   const handleSubmit = async (values) => {
-    const createdBy = 4;
+    const createdBy = 1;
     if (typeof values.Options === 'string') {
       answersArray.push(values.Options);
     }
@@ -28,7 +28,7 @@ function Questions() {
     };
     const response = await PostData('questions/', question);
     const data = await response.json();
-    if (response.status === 200) {
+    if (data.message !== 'Invalid Body') {
       notification.open({
         message: 'Success',
         description: QUESTION_ADDED,
@@ -37,7 +37,7 @@ function Questions() {
     } else {
       notification.open({
         message: 'Error',
-        description: data.message,
+        description: data.error.details[0].message,
         icon: <FrownOutlined style={{ color: '#108EE9' }} />
       });
     }
