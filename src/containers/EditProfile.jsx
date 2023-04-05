@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   FrownOutlined,
   LockOutlined, PhoneOutlined, SmileOutlined, UserOutlined
@@ -22,9 +23,11 @@ function EditProfile() {
   const { Option } = Select;
   const [form] = Form.useForm();
   const linkValue = true;
+  const { user } = useSelector((state) => state.user);
+  console.log(user.id);
   const onFinish = async (values) => {
-    const id = 1;
-    const response = await PutData(`users/${id}`, values);
+    const Id = user.id;
+    const response = await PutData(`users/${Id}`, values);
     const data = await response.json();
     console.log(data);
     if (data.message !== 'Invalid Body') {
