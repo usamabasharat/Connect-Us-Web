@@ -13,7 +13,7 @@ function Navbar({ onMenuExpand }) {
   };
   const MenuList = [
     {
-      key: '/',
+      key: '/menu',
       icon: <MenuOutlined />,
       className: 'focus:!text-black after:!border-b-0',
       onClick: onMenuExpand
