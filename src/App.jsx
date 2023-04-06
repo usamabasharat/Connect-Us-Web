@@ -18,6 +18,7 @@ import Feedback from './containers/Feedback';
 import Profile from './containers/Profile';
 import GenericSlots from './containers/GenericSlots';
 import Calendar from './containers/Calendar';
+import ExceptionSlots from './containers/exceptionSlot';
 
 const { Content } = Layout;
 
@@ -54,6 +55,7 @@ function App() {
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/genericSlots" element={<GenericSlots />} />
+            <Route path="/exceptionSlots" element={<ExceptionSlots />} />
             <Route path="/calendar" element={<Calendar />} />
           </Routes>
         </Content>

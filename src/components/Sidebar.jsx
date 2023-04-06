@@ -35,6 +35,11 @@ function Sidebar({ isMenuVisible, hideDrawer }) {
       key: '/genericSlots',
       label: 'Generic Slots',
       icon: <SettingOutlined />,
+    },
+    {
+      key: '/exceptionSlots',
+      label: 'Exception Slots',
+      icon: <SettingOutlined />,
     }
   ];
   return (
