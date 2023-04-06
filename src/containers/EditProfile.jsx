@@ -1,62 +1,138 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 import {
-  Button, Form,
+  FrownOutlined,
+  LockOutlined, PhoneOutlined, SmileOutlined, UserOutlined
+} from '@ant-design/icons';
+import {
+  Button, Form, notification, Select
 } from 'antd';
+import { Link } from 'react-router-dom';
 import Textfield from '../shared/TextField';
+import {
+  FIRST_NAME_PROMPT, LAST_NAME_PROMPT,
+  MIN_PASSWORD_PROMPT, PASSWORD_REQUIRED_PROMPT,
+  STRONG_PASSWORD_PROMPT,
+  USER_UPDATED,
+  VALID_NUMBER_PROMPT,
+} from '../constants/messages';
+import { NUMBER_PATTERN, PASSWORD_PATTERN } from '../constants/pattern';
+import { PutData } from '../API/api';
 
 function EditProfile() {
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+  const { Option } = Select;
+  const [form] = Form.useForm();
+  const linkValue = true;
+  const { user } = useSelector((state) => state.user);
+  console.log(user.id);
+  const onFinish = async (values) => {
+    const Id = user.id;
+    const response = await PutData(`users/${Id}`, values);
+    const data = await response.json();
+    console.log(data);
+    if (data.message !== 'Invalid Body') {
+      notification.open({
+        message: 'Success',
+        description: USER_UPDATED,
+        icon: <SmileOutlined style={{ color: '#108EE9' }} />
+      });
+    } else {
+      notification.open({
+        message: 'Error',
+        description: data.error.details[0].message,
+        icon: <FrownOutlined style={{ color: '#108EE9' }} />
+      });
+    }
+    form.resetFields();
   };
+
   return (
     <div className="flex h-screen">
       <div className="m-auto w-1/4 border-2 rounded-md p-5 space-y-10 bg-white">
         <h1 className="text-[#008080] text-3xl">Edit Profile</h1>
         <Form
+          form={form}
           name="normal_login"
           className="login-form"
           initialValues={{ remember: true }}
           onFinish={onFinish}
         >
           <Textfield
-            name="Name"
+            name="first_name"
             type="name"
+            labelText="First Name"
+            placeholder="Enter your First Name"
             prefix={<UserOutlined className="site-form-item-icon" />}
             rules={[{
-              required: true, message: 'Please input your Full Name.',
+              required: true, message: FIRST_NAME_PROMPT,
             }]}
           />
           <Textfield
-            name="Password"
-            type="password"
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            rules={[{ required: true, message: 'Please input your Password!' },
-              { min: 8, message: 'Password must be minimum 8 characters.' },
-              {
-                pattern: /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9!#@$%\-_=+<>]+)$/,
-                message: 'Password Pattern',
-              },
-            ]}
+            name="last_name"
+            type="name"
+            labelText="Last Name"
+            placeholder="Enter your Last Name"
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            rules={[{
+              required: true, message: LAST_NAME_PROMPT,
+            }]}
           />
           <Textfield
-            name="Confirm Password"
+            name="password"
+            labelText="Password"
+            placeholder="Enter Password"
+            rules={[
+              { required: true, message: PASSWORD_REQUIRED_PROMPT },
+              { min: 8, message: MIN_PASSWORD_PROMPT },
+              {
+                pattern: PASSWORD_PATTERN,
+                message: STRONG_PASSWORD_PROMPT
+              }
+            ]}
             type="password"
             prefix={<LockOutlined className="site-form-item-icon" />}
-            rules={[{ required: true, message: 'Please input your Confirm Password!' },
-              { min: 8, message: 'Password must be minimum 8 characters.' },
-            ]}
           />
-          <Form.Item
-            name="generic_slots"
-            rules={[{ required: true, message: '' },
+          <Textfield
+            name="phone"
+            labelText="Phone Number"
+            placeholder="Enter your Phone Number"
+            rules={[
+              {
+                required: true,
+                message: VALID_NUMBER_PROMPT,
+                pattern: NUMBER_PATTERN
+              }
             ]}
-          >
-            <label className="block text-left text-gray-700 text-sm font-bold mb-4">
-              Generic Slots
-            </label>
-          </Form.Item>
+            type="text"
+            prefix={<PhoneOutlined className="site-form-item-icon" />}
+          />
+          <label htmlFor="Designation" className="block text-left text-gray-700 text-sm font-bold mb-4">
+            Designation
+            <Form.Item
+              name="designation"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please select your designation!',
+                },
+              ]}
+            >
+              <Select placeholder="Select your designation">
+                <Option value="ase">ASE</Option>
+                <Option value="se">SE</Option>
+                <Option value="sse">SSE</Option>
+                <Option value="atl">ATL</Option>
+                <Option value="tl">TL</Option>
+                <Option value="apm">APM</Option>
+                <Option value="pm">PM</Option>
+              </Select>
+            </Form.Item>
+          </label>
+          <div className="flex">
+            <Link to="/genericSlots" state={linkValue} className="text-[#008080] hover:text-[#20b2aa] justify-start mb-3">
+              Edit Generic Slots
+            </Link>
+          </div>
           <Form.Item>
             <div className="flex justify-between">
               <Button
@@ -65,7 +141,7 @@ function EditProfile() {
               >
                 Save Changes
               </Button>
-              <p className="text-[#008080] hover:text-[#20b2aa]">Cancel</p>
+              <p className="text-[#008080] hover:text-[#20b2aa] mt-3">Cancel</p>
             </div>
           </Form.Item>
         </Form>

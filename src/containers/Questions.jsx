@@ -3,6 +3,7 @@ import {
   Form, Radio, Checkbox, Button, Select, Input, notification
 } from 'antd';
 import { FrownOutlined, SmileOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 import Textfield from '../shared/TextField';
 import { QUESTION_ADDED, QUESTION_REQUIRED } from '../constants/messages';
 import { PostData } from '../API/api';
@@ -13,9 +14,10 @@ function Questions() {
   const [type, setQuestionType] = useState('');
   const [newOption, setNewOption] = useState();
   const [answersArray, setAnswerArray] = useState([]);
+  const { user } = useSelector((state) => state.user);
 
   const handleSubmit = async (values) => {
-    const createdBy = 7;
+    const createdBy = user.id;
     if (typeof values.Options === 'string') {
       answersArray.push(values.Options);
     }
@@ -28,7 +30,7 @@ function Questions() {
     };
     const response = await PostData('questions/', question);
     const data = await response.json();
-    if (response.status === 200) {
+    if (data.message !== 'Invalid Body') {
       notification.open({
         message: 'Success',
         description: QUESTION_ADDED,
@@ -37,7 +39,7 @@ function Questions() {
     } else {
       notification.open({
         message: 'Error',
-        description: data.message,
+        description: data.error.details[0].message,
         icon: <FrownOutlined style={{ color: '#108EE9' }} />
       });
     }

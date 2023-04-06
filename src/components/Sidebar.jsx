@@ -29,6 +29,16 @@ function Sidebar({ isMenuVisible, hideDrawer }) {
       key: '/settings',
       label: 'Settings',
       icon: <SettingOutlined />,
+    },
+    {
+      key: '/genericSlots',
+      label: 'Generic Slots',
+      icon: <SettingOutlined />,
+    },
+    {
+      key: '/exceptionSlots',
+      label: 'Exception Slots',
+      icon: <SettingOutlined />,
     }
   ];
   return (
@@ -40,7 +50,7 @@ function Sidebar({ isMenuVisible, hideDrawer }) {
         hideDrawer();
       }}
       open={isMenuVisible}
-      width={200}
+      width={250}
     >
       <Menu theme="light" mode="inline" items={MenuList} onClick={onSelectMenu} />
     </Drawer>
