@@ -27,6 +27,7 @@ function Calendar() {
   }, []);
 
   const onFinish = (values) => {
+    console.log(values);
     const { title, attendees } = values;
 
     setMeetings({ title, attendees });
@@ -153,15 +154,27 @@ function Calendar() {
           </Form.Item>
           <Form.Item
             name="url"
-            label="URL"
             rules={[
               {
+                required: true,
                 type: 'url',
                 message: 'Please enter a valid URL',
               },
             ]}
           >
-            <Input />
+            <Input placeholder="URL" />
+          </Form.Item>
+          <Form.Item
+            name="attachments"
+            rules={[
+              {
+                required: true,
+                type: 'url',
+                message: 'Please enter a valid Attachment',
+              },
+            ]}
+          >
+            <Input placeholder="Attachments" />
           </Form.Item>
           <div className="flex justify-end">
             <Button
