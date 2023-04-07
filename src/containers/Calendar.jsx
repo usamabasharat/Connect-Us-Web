@@ -3,7 +3,6 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { Button } from 'antd';
 import {
   Modal, Form, Input, Button, Select
 } from 'antd';
@@ -64,7 +63,7 @@ function Calendar() {
   const handleEventClick = (clickInfo) => {
     clickInfo.event.remove();
   };
-  
+
   return (
     <>
       <div className="flex flex-row h-screen bg-white">
@@ -113,35 +112,35 @@ function Calendar() {
           </div>
         </div>
       </div>
-        <Modal
-          title="Schedule Meeting"
-          open={visible}
-          onCancel={handleCancel}
-          footer={null}
-        >
-          <Form form={form} onFinish={onFinish}>
-            <Form.Item name="title" rules={[{ required: true, message: 'Please enter a meeting title!' }]}>
-              <Input placeholder="Meeting Title" />
-            </Form.Item>
-            <Form.Item name="attendees" rules={[{ required: true, message: 'Please select at least one attendee!' }]}>
-              <Select mode="tags" placeholder="Attendees">
-                <Option value="John">John</Option>
-                <Option value="Jane">Jane</Option>
-                <Option value="Doe">Doe</Option>
-              </Select>
-            </Form.Item>
-            <div className="flex justify-end">
-              <Button
-                htmlType="submit"
-                className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
-              >
-                Schedule
+      <Modal
+        title="Schedule Meeting"
+        open={visible}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <Form form={form} onFinish={onFinish}>
+          <Form.Item name="title" rules={[{ required: true, message: 'Please enter a meeting title!' }]}>
+            <Input placeholder="Meeting Title" />
+          </Form.Item>
+          <Form.Item name="attendees" rules={[{ required: true, message: 'Please select at least one attendee!' }]}>
+            <Select mode="tags" placeholder="Attendees">
+              <Option value="John">John</Option>
+              <Option value="Jane">Jane</Option>
+              <Option value="Doe">Doe</Option>
+            </Select>
+          </Form.Item>
+          <div className="flex justify-end">
+            <Button
+              htmlType="submit"
+              className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
+            >
+              Schedule
 
-              </Button>
-              <Button onClick={handleCancel}>Cancel</Button>
-            </div>
-          </Form>
-        </Modal>
+            </Button>
+            <Button onClick={handleCancel}>Cancel</Button>
+          </div>
+        </Form>
+      </Modal>
     </>
   );
 }
