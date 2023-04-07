@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -6,16 +6,32 @@ import interactionPlugin from '@fullcalendar/interaction';
 import {
   Modal, Form, Input, Button, Select
 } from 'antd';
+import { GetData } from '../API/api';
 
 const { Option } = Select;
 
 function Calendar() {
+  let userNames;
   const [events] = useState([]);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [meetings, setMeetings] = useState([]);
   const [info, setInfo] = useState();
+  const [users, setUsers] = useState([]);
 
+  useEffect(() => {
+    async function fetchData() {
+      const response = await GetData('users');
+      setUsers(response);
+    }
+    fetchData();
+  }, []);
+
+  if (users) {
+    userNames = users.map((user) => user.first_name);
+  }
+
+  console.log(userNames);
   const onFinish = (values) => {
     const { title, attendees } = values;
     console.log('Received values of form: ', values);
@@ -124,9 +140,9 @@ function Calendar() {
           </Form.Item>
           <Form.Item name="attendees" rules={[{ required: true, message: 'Please select at least one attendee!' }]}>
             <Select mode="tags" placeholder="Attendees">
-              <Option value="John">John</Option>
-              <Option value="Jane">Jane</Option>
-              <Option value="Doe">Doe</Option>
+              {userNames.map((name) => (
+                <Option value={name}>{name}</Option>
+              ))}
             </Select>
           </Form.Item>
           <div className="flex justify-end">
