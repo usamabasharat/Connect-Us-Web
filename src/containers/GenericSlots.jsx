@@ -97,7 +97,7 @@ function GenericSlots() {
 
   return (
     <div className="flex h-screen">
-      <div className="m-auto w-1/4 border-2 rounded-md p-5 space-y-10 bg-white">
+      <div className="m-auto w-1/2 border-2 rounded-md p-5 space-y-10 bg-white">
         <h1 className="text-[#008080] text-xl font-bold text-left">Generic Slots</h1>
         <Form
           form={form}
