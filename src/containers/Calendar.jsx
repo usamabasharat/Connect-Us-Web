@@ -11,7 +11,6 @@ import { GetData } from '../API/api';
 const { Option } = Select;
 
 function Calendar() {
-  let userNames;
   const [events] = useState([]);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
@@ -27,14 +26,8 @@ function Calendar() {
     fetchData();
   }, []);
 
-  if (users) {
-    userNames = users.map((user) => user.first_name);
-  }
-
-  console.log(userNames);
   const onFinish = (values) => {
     const { title, attendees } = values;
-    console.log('Received values of form: ', values);
 
     setMeetings({ title, attendees });
     setVisible(false);
@@ -140,8 +133,8 @@ function Calendar() {
           </Form.Item>
           <Form.Item name="attendees" rules={[{ required: true, message: 'Please select at least one attendee!' }]}>
             <Select mode="tags" placeholder="Attendees">
-              {userNames.map((name) => (
-                <Option value={name}>{name}</Option>
+              {users.map((user) => (
+                <Option key={user.id} value={user.first_name}>{`${user.first_name} ${user.last_name}`}</Option>
               ))}
             </Select>
           </Form.Item>
