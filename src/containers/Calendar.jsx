@@ -4,13 +4,17 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {
-  Modal, Form, Input, Button, Select
+  Modal, Form, Input, Button, Select, notification
 } from 'antd';
-import { GetData } from '../API/api';
+import { useSelector } from 'react-redux';
+import { FrownOutlined, SmileOutlined } from '@ant-design/icons';
+import { GetData, PostData } from '../API/api';
 
 const { Option } = Select;
 
 function Calendar() {
+  const { user } = useSelector((state) => state.user);
+  const Id = user.id;
   const [events] = useState([]);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
@@ -18,27 +22,34 @@ function Calendar() {
   const [info, setInfo] = useState();
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await GetData('users');
-      setUsers(response);
-    }
-    fetchData();
-  }, []);
-
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     const calendarApi = info.view.calendar;
     const { title, attendees } = values;
     const fromTime = new Date(info.startStr);
     const from = fromTime.getTime();
     const toTime = new Date(info.endStr);
     const to = toTime.getTime();
-    console.log({
+    const meetingData = ({
       ...values,
       from,
-      to
+      to,
+      user_id: Id
     });
-
+    const response = await PostData('meetings/', meetingData);
+    const data = await response.json();
+    if (data.message === 'Meeting Created Successfully') {
+      notification.open({
+        message: 'Success',
+        description: data.message,
+        icon: <SmileOutlined style={{ color: '#108EE9' }} />
+      });
+    } else {
+      notification.open({
+        message: 'Error',
+        description: data.error.details[0].message,
+        icon: <FrownOutlined style={{ color: '#108EE9' }} />
+      });
+    }
     setMeetings({ title, attendees });
     setVisible(false);
     form.resetFields();
@@ -81,6 +92,14 @@ function Calendar() {
   const handleEventClick = (clickInfo) => {
     clickInfo.event.remove();
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await GetData('users');
+      setUsers(response);
+    }
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -143,7 +162,7 @@ function Calendar() {
           <Form.Item name="description" rules={[{ required: true, message: 'Please enter a meeting Description!' }]}>
             <Input placeholder="Meeting Description" />
           </Form.Item>
-          <Form.Item name="meeting_type" rules={[{ required: true, message: 'Please select type!' }]}>
+          <Form.Item name="type" rules={[{ required: true, message: 'Please select type!' }]}>
             <Select placeholder="Meeting Type">
               <Option value="mock">Mock</Option>
               <Option value="codereview">Code Review</Option>
@@ -155,8 +174,8 @@ function Calendar() {
           </Form.Item>
           <Form.Item name="attendees" rules={[{ required: true, message: 'Please select at least one attendee!' }]}>
             <Select mode="tags" placeholder="Attendees">
-              {users.map((user) => (
-                <Option key={user.id} value={user.first_name}>{`${user.first_name} ${user.last_name}`}</Option>
+              {users.map((data) => (
+                <Option key={data.id} value={data.first_name}>{`${data.first_name} ${data.last_name}`}</Option>
               ))}
             </Select>
           </Form.Item>

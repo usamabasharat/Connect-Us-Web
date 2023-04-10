@@ -13,7 +13,6 @@ import Meetings from './containers/Meetings';
 import EditProfile from './containers/EditProfile';
 import SettingPage from './containers/Settings';
 import Questions from './containers/Questions';
-import Dashboard from './containers/Dashboard';
 import Feedback from './containers/Feedback';
 import Profile from './containers/Profile';
 import GenericSlots from './containers/GenericSlots';
@@ -47,7 +46,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route exact path="/register" element={<Register />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Calendar />} />
             <Route path="/meetings" element={<Meetings />} />
             <Route path="/editprofile" element={<EditProfile />} />
             <Route path="/settings" element={<SettingPage />} />
@@ -56,7 +55,6 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/genericSlots" element={<GenericSlots />} />
             <Route path="/exceptionSlots" element={<ExceptionSlots />} />
-            <Route path="/calendar" element={<Calendar />} />
           </Routes>
         </Content>
       </Layout>
