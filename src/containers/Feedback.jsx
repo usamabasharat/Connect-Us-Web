@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Card, Button, Radio, Checkbox, Input
+  Card, Button, Radio, Checkbox, Input, Select
 } from 'antd';
 import { useSelector } from 'react-redux';
 import { GetDataByType, PostData } from '../API/api';
+
+const { Option } = Select;
 
 function Feedback() {
   const [questions, setQuestions] = useState([]);
@@ -48,6 +50,19 @@ function Feedback() {
             ))}
           </Checkbox.Group>
         );
+      case 'numeric':
+        return (
+          <Select
+            defaultValue={question.question_answer.answers[0]}
+            onChange={(selectedValues) => setAnswers({ ...answers, [question.id]: selectedValues })}
+          >
+            {question.question_answer.answers.map((option) => (
+              <Option key={option} value={option}>
+                {option}
+              </Option>
+            ))}
+          </Select>
+        );
       case 'string':
         return <Input placeholder="Enter Answer" onChange={(e) => setAnswers({ ...answers, [question.id]: e.target.value })} />;
       default:
@@ -74,11 +89,12 @@ function Feedback() {
     const response = await PostData('feedbacks/', formData);
     const data = await response.json();
     console.log(data);
+    window.location.reload();
   };
 
   return (
     <div className="flex h-screen">
-      <div className="m-auto  border-2 rounded-md p-5 space-y-10 ">
+      <div className="m-auto w-1/2 border-2 rounded-md p-5 space-y-10 bg-white">
         <h1 className="text-[#008080] text-3xl">Feedback</h1>
         {questions.map((question) => (
           <Card key={question.id} title={question.text}>
