@@ -14,6 +14,7 @@ const { Option } = Select;
 
 function Calendar() {
   const { user } = useSelector((state) => state.user);
+  console.log(user);
   const Id = user.id;
   const [events] = useState([]);
   const [visible, setVisible] = useState(false);

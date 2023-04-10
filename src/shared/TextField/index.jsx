@@ -2,7 +2,7 @@ import { Form, Input } from 'antd';
 import React from 'react';
 
 function Textfield({
-  prefix, name, rules, type, labelText, placeholder
+  prefix, name, rules, type, labelText, placeholder, defaultValue
 }) {
   return (
     <Form.Item name={name} rules={rules}>
@@ -12,6 +12,7 @@ function Textfield({
           type={type}
           prefix={prefix}
           placeholder={placeholder}
+          defaultValue={defaultValue}
         />
       </label>
     </Form.Item>

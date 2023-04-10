@@ -62,6 +62,7 @@ function EditProfile() {
             type="name"
             labelText="First Name"
             placeholder="Enter your First Name"
+            defaultValue={user.first_name}
             prefix={<UserOutlined className="site-form-item-icon" />}
             rules={[{
               required: true, message: FIRST_NAME_PROMPT,
@@ -72,6 +73,7 @@ function EditProfile() {
             type="name"
             labelText="Last Name"
             placeholder="Enter your Last Name"
+            defaultValue={user.last_name}
             prefix={<UserOutlined className="site-form-item-icon" />}
             rules={[{
               required: true, message: LAST_NAME_PROMPT,
@@ -96,6 +98,7 @@ function EditProfile() {
             name="phone"
             labelText="Phone Number"
             placeholder="Enter your Phone Number"
+            defaultValue={user.phone}
             rules={[
               {
                 required: true,
@@ -117,7 +120,7 @@ function EditProfile() {
                 },
               ]}
             >
-              <Select placeholder="Select your designation">
+              <Select placeholder="Select your designation" defaultValue={user.designation}>
                 <Option value="ase">ASE</Option>
                 <Option value="se">SE</Option>
                 <Option value="sse">SSE</Option>
