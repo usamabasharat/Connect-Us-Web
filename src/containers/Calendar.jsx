@@ -27,14 +27,22 @@ function Calendar() {
   }, []);
 
   const onFinish = (values) => {
-    console.log(values);
+    const calendarApi = info.view.calendar;
     const { title, attendees } = values;
+    const fromTime = new Date(info.startStr);
+    const from = fromTime.getTime();
+    const toTime = new Date(info.endStr);
+    const to = toTime.getTime();
+    console.log({
+      ...values,
+      from,
+      to
+    });
 
     setMeetings({ title, attendees });
     setVisible(false);
     form.resetFields();
 
-    const calendarApi = info.view.calendar;
     calendarApi.unselect();
 
     if (meetings) {
@@ -140,7 +148,7 @@ function Calendar() {
               <Option value="mock">Mock</Option>
               <Option value="codereview">Code Review</Option>
               <Option value="one">One</Option>
-              <Option value="annual">Annaul</Option>
+              <Option value="annual">Annual</Option>
               <Option value="biannual">Biannual</Option>
               <Option value="quarterly">quarterly</Option>
             </Select>
