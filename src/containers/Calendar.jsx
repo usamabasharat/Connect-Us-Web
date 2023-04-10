@@ -136,13 +136,13 @@ function Calendar() {
             <Input placeholder="Meeting Description" />
           </Form.Item>
           <Form.Item name="meeting_type" rules={[{ required: true, message: 'Please select type!' }]}>
-            <Select mode="tags" placeholder="Meeting Type">
+            <Select placeholder="Meeting Type">
               <Option value="mock">Mock</Option>
               <Option value="codereview">Code Review</Option>
               <Option value="one">One</Option>
-              <Option value="annual">Annaul</Option>
+              <Option value="annual">Annual</Option>
               <Option value="biannual">Biannual</Option>
-              <Option value="quarterly">quarterly</Option>
+              <Option value="quarterly">Quarterly</Option>
             </Select>
           </Form.Item>
           <Form.Item name="attendees" rules={[{ required: true, message: 'Please select at least one attendee!' }]}>
