@@ -175,7 +175,7 @@ function Calendar() {
           <Form.Item name="attendees" rules={[{ required: true, message: 'Please select at least one attendee!' }]}>
             <Select mode="tags" placeholder="Attendees">
               {users.map((data) => (
-                <Option key={data.id} value={data.first_name}>{`${data.first_name} ${data.last_name}`}</Option>
+                <Option key={data.id} value={data.id}>{`${data.first_name} ${data.last_name}`}</Option>
               ))}
             </Select>
           </Form.Item>
