@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
-  Form, Radio, Checkbox, Button, Select, Input, notification, Card
+  Form, Radio, Checkbox, Button, Select, Input, Card
 } from 'antd';
-import { FrownOutlined, SmileOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import Textfield from '../shared/TextField';
 import { QUESTION_ADDED, QUESTION_REQUIRED } from '../constants/messages';
 import { PostData } from '../API/api';
+import Notification from '../components/Notification';
 
 function Questions() {
   const [form] = Form.useForm();
@@ -32,23 +32,9 @@ function Questions() {
     const response = await PostData('questions/', question);
     const data = await response.json();
     if (data.message !== 'Invalid Body') {
-      notification.open({
-        style: { color: 'rgb(25, 135, 84)' },
-        message: (
-          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
-        ),
-        description: QUESTION_ADDED,
-        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
-      });
+      Notification(true, QUESTION_ADDED);
     } else {
-      notification.open({
-        style: { color: 'rgb(255,51,51)' },
-        message: (
-          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
-        ),
-        description: data.error.details[0].message,
-        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
-      });
+      Notification(false, QUESTION_REQUIRED);
     }
     form.resetFields();
     setAnswerArray([]);

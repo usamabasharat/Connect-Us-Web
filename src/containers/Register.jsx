@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  FrownOutlined, SmileOutlined, LockOutlined, UserOutlined, PhoneOutlined, MailOutlined
+  LockOutlined, UserOutlined, PhoneOutlined, MailOutlined
 } from '@ant-design/icons';
 import {
-  Button, Form, notification, Select
+  Button, Form, Select
 } from 'antd';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -25,6 +25,7 @@ import {
   SIGNUP_FAIL_EMAIL,
 } from '../constants/notifications';
 import { PostData } from '../API/api';
+import Notification from '../components/Notification';
 
 const { Option } = Select;
 
@@ -40,24 +41,10 @@ function Register() {
     const response = await PostData('users/', values);
     const data = await response.json();
     if (data.user === 'Email Already in Use') {
-      notification.open({
-        style: { color: 'rgb(255,51,51)' },
-        message: (
-          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
-        ),
-        description: SIGNUP_FAIL_EMAIL,
-        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
-      });
+      Notification(false, SIGNUP_FAIL_EMAIL);
     } else {
       dispatch(loginSuccess(data.user));
-      notification.open({
-        style: { color: 'rgb(25, 135, 84)' },
-        message: (
-          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
-        ),
-        description: SIGNUP_SUCCESS,
-        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
-      });
+      Notification(true, SIGNUP_SUCCESS);
       navigate('/calendar');
     }
   };

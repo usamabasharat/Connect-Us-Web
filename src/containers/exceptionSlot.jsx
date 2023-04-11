@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  Form, DatePicker, Button, notification, Table
+  Form, DatePicker, Button, Table
 } from 'antd';
-import { FileTextOutlined, FrownOutlined, SmileOutlined } from '@ant-design/icons';
+import { FileTextOutlined } from '@ant-design/icons';
 import { EXCEPTION_SLOT_ADDED, VALID_REASON, VALID_TIME } from '../constants/messages';
 import './MyRangePicker.css';
 import { GetData, PostData } from '../API/api';
 import Textfield from '../shared/TextField';
+import Notification from '../components/Notification';
 
 function ExceptionSlots() {
   const { RangePicker } = DatePicker;
@@ -86,41 +87,13 @@ function ExceptionSlots() {
     const response = await PostData('exceptionSlots/', exceptionSlot);
     const data = await response.json();
     if (data.message === 'Generic Slot already taken for the selected day please go to edit profile to edit slot') {
-      notification.open({
-        style: { color: 'rgb(255,51,51)' },
-        message: (
-          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
-        ),
-        description: data.message,
-        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
-      });
+      Notification(false, data.message);
     } else if (data.message === 'Updated Slot Successfully') {
-      notification.open({
-        style: { color: 'rgb(25, 135, 84)' },
-        message: (
-          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
-        ),
-        description: data.message,
-        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
-      });
+      Notification(true, data.message);
     } else if (data.message === 'Invalid Body') {
-      notification.open({
-        style: { color: 'rgb(255,51,51)' },
-        message: (
-          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
-        ),
-        description: data.error.details[0].message,
-        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
-      });
+      Notification(false, data.error.details[0].message);
     } else {
-      notification.open({
-        style: { color: 'rgb(25, 135, 84)' },
-        message: (
-          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
-        ),
-        description: EXCEPTION_SLOT_ADDED,
-        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
-      });
+      Notification(true, EXCEPTION_SLOT_ADDED);
     }
     form.resetFields();
     updateExceptionSlot();

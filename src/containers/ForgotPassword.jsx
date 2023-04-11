@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  LockOutlined, MailOutlined, FrownOutlined, SmileOutlined
+  LockOutlined, MailOutlined
 } from '@ant-design/icons';
 import {
-  Button, Form, notification
+  Button, Form
 } from 'antd';
 import { Link } from 'react-router-dom';
 import Textfield from '../shared/TextField';
@@ -13,40 +13,21 @@ import {
   MIN_PASSWORD_PROMPT,
   STRONG_PASSWORD_PROMPT,
   PASSWORD_DO_NOT_MATCH_PROMPT,
-  // INVALID_PASSWORD,
   EMAIL_DOES_NOT_EXIST,
   PASSWORD_UPDATED
 } from '../constants/messages';
 import { PASSWORD_PATTERN } from '../constants/pattern';
 import { ForgotPasswordApi } from '../API/api';
+import Notification from '../components/Notification';
 
 function ForgotPassword() {
-  // const navigate = useNavigate();
-
   const onFinish = async (values) => {
     const response = await ForgotPasswordApi('users/forgotpassword', values);
-
     const data = await response.json();
-
     if (data.user === EMAIL_DOES_NOT_EXIST) {
-      notification.open({
-        style: { color: 'rgb(255,51,51)' },
-        message: (
-          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
-        ),
-        description: EMAIL_DOES_NOT_EXIST,
-        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
-      });
+      Notification(false, EMAIL_DOES_NOT_EXIST);
     } else {
-      notification.open({
-        style: { color: 'rgb(25, 135, 84)' },
-        message: (
-          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
-        ),
-        description: PASSWORD_UPDATED,
-        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
-      });
-      // navigate('/');
+      Notification(true, PASSWORD_UPDATED);
     }
   };
 

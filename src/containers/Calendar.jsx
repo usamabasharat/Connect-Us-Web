@@ -5,12 +5,12 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {
-  Modal, Form, Input, Button, Select, notification
+  Modal, Form, Input, Button, Select
 } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { FrownOutlined, SmileOutlined } from '@ant-design/icons';
 import { allMeetings } from '../store/slices/meetingSlice';
 import { GetData, PostData, GetDataByID } from '../API/api';
+import Notification from '../components/Notification';
 
 const { Option } = Select;
 
@@ -53,23 +53,9 @@ function Calendar() {
     const response = await PostData('meetings/', meetingData);
     const data = await response.json();
     if (data.message === 'Meeting Created Successfully') {
-      notification.open({
-        style: { color: 'rgb(25, 135, 84)' },
-        message: (
-          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
-        ),
-        description: data.message,
-        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
-      });
+      Notification(true, data.message);
     } else {
-      notification.open({
-        style: { color: 'rgb(255,51,51)' },
-        message: (
-          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
-        ),
-        description: data.error.details[0].message,
-        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
-      });
+      Notification(false, data.error.details[0].message);
     }
     setMeetings({ title, attendees });
     setVisible(false);

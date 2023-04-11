@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  Form, TimePicker, Button, notification, Select, Table
+  Form, TimePicker, Button, Select, Table
 } from 'antd';
-import { FrownOutlined, SmileOutlined } from '@ant-design/icons';
 import { useLocation } from 'react-router-dom';
 import { GENERIC_SLOT_ADDED, VALID_TIME } from '../constants/messages';
 import './MyRangePicker.css';
 import { GetData, PostData, PutData } from '../API/api';
+import Notification from '../components/Notification';
 
 function GenericSlots() {
   const location = useLocation();
@@ -67,41 +67,13 @@ function GenericSlots() {
     const response = update ? await PutData(`genericSlots/${day}`, genericSlot) : await PostData('genericSlots/', genericSlot);
     const data = await response.json();
     if (data.message === 'Generic Slot already taken for the selected day please go to edit profile to edit slot') {
-      notification.open({
-        style: { color: 'rgb(255,51,51)' },
-        message: (
-          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
-        ),
-        description: data.message,
-        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
-      });
+      Notification(false, data.message);
     } else if (data.message === 'Updated Slot Successfully') {
-      notification.open({
-        style: { color: 'rgb(25, 135, 84)' },
-        message: (
-          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
-        ),
-        description: data.message,
-        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
-      });
+      Notification(true, data.message);
     } else if (data.message === 'Invalid Body') {
-      notification.open({
-        style: { color: 'rgb(255,51,51)' },
-        message: (
-          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
-        ),
-        description: data.error.details[0].message,
-        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
-      });
+      Notification(false, data.error.details[0].message);
     } else {
-      notification.open({
-        style: { color: 'rgb(25, 135, 84)' },
-        message: (
-          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
-        ),
-        description: GENERIC_SLOT_ADDED,
-        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
-      });
+      Notification(true, GENERIC_SLOT_ADDED);
     }
     form.resetFields();
     updateGenericSlot();
