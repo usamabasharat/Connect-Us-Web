@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
+
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {
   Modal, Form, Input, Button, Select, notification
 } from 'antd';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FrownOutlined, SmileOutlined } from '@ant-design/icons';
-import { GetData, PostData } from '../API/api';
+import { allMeetings } from '../store/slices/meetingSlice';
+import { GetData, PostData, GetDataByID } from '../API/api';
 
 const { Option } = Select;
 
 function Calendar() {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  useEffect(() => {
+    async function fetchMeetings() {
+      const meetings = await GetDataByID('meetings', user.id);
+      const resData = await meetings.json();
+      dispatch(allMeetings(resData));
+    }
+    fetchMeetings();
+  });
+
   const { meetings } = useSelector((state) => state.meetings);
   console.log(`meetings: ${JSON.stringify(meetings)}`);
 

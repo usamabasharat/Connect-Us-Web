@@ -6,7 +6,6 @@ import {
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../store/slices/userSlice';
-import { allMeetings } from '../store/slices/meetingSlice';
 import Textfield from '../shared/TextField';
 import { PASSWORD_PATTERN } from '../constants/pattern';
 import {
@@ -18,7 +17,7 @@ import {
   EMAIL_DOES_NOT_EXIST,
   LOGIN_SUCCESS
 } from '../constants/messages';
-import { LoginUser, GetDataByID } from '../API/api';
+import { LoginUser } from '../API/api';
 
 function Login() {
   const navigate = useNavigate();
@@ -41,9 +40,6 @@ function Login() {
       });
     } else {
       dispatch(loginSuccess(data.user));
-      const meetings = await GetDataByID('meetings', data.user.id);
-      const resData = await meetings.json();
-      dispatch(allMeetings(resData));
       notification.open({
         message: 'Success',
         description: LOGIN_SUCCESS,
