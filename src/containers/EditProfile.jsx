@@ -1,11 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {
-  FrownOutlined,
-  LockOutlined, PhoneOutlined, SmileOutlined, UserOutlined
+  LockOutlined, PhoneOutlined, UserOutlined
 } from '@ant-design/icons';
 import {
-  Button, Form, notification, Select
+  Button, Form, Select
 } from 'antd';
 import { Link } from 'react-router-dom';
 import Textfield from '../shared/TextField';
@@ -18,36 +17,22 @@ import {
 } from '../constants/messages';
 import { NUMBER_PATTERN, PASSWORD_PATTERN } from '../constants/pattern';
 import { PutData } from '../API/api';
+import Notification from '../components/Notification';
 
 function EditProfile() {
   const { Option } = Select;
   const [form] = Form.useForm();
   const linkValue = true;
   const { user } = useSelector((state) => state.user);
-  console.log(user.id);
   const onFinish = async (values) => {
     const Id = user.id;
     const response = await PutData(`users/${Id}`, values);
     const data = await response.json();
     console.log(data);
     if (data.message !== 'Invalid Body') {
-      notification.open({
-        style: { color: 'rgb(25, 135, 84)' },
-        message: (
-          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
-        ),
-        description: USER_UPDATED,
-        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
-      });
+      Notification(true, USER_UPDATED);
     } else {
-      notification.open({
-        style: { color: 'rgb(255,51,51)' },
-        message: (
-          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
-        ),
-        description: data.error.details[0].message,
-        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
-      });
+      Notification(false, data.error.details[0].message);
     }
     form.resetFields();
   };

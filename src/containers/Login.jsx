@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, Form, notification } from 'antd';
+import { Button, Form } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
 import {
-  FrownOutlined, SmileOutlined, MailOutlined, LockOutlined
+  MailOutlined, LockOutlined
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../store/slices/userSlice';
@@ -18,6 +18,7 @@ import {
   LOGIN_SUCCESS
 } from '../constants/messages';
 import { LoginUser } from '../API/api';
+import Notification from '../components/Notification';
 
 function Login() {
   const navigate = useNavigate();
@@ -27,33 +28,12 @@ function Login() {
     const response = await LoginUser('users/login', values);
     const data = await response.json();
     if (data.user === 'Password does not match') {
-      notification.open({
-        style: { color: 'rgb(255,51,51)' },
-        message: (
-          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
-        ),
-        description: INVALID_PASSWORD,
-        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
-      });
+      Notification(false, INVALID_PASSWORD);
     } else if (data.user === EMAIL_DOES_NOT_EXIST) {
-      notification.open({
-        style: { color: 'rgb(255,51,51)' },
-        message: (
-          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
-        ),
-        description: EMAIL_DOES_NOT_EXIST,
-        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
-      });
+      Notification(false, EMAIL_DOES_NOT_EXIST);
     } else {
       dispatch(loginSuccess(data.user));
-      notification.open({
-        style: { color: 'rgb(25, 135, 84)' },
-        message: (
-          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
-        ),
-        description: LOGIN_SUCCESS,
-        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
-      });
+      Notification(true, LOGIN_SUCCESS);
       navigate('/calendar');
     }
   };
