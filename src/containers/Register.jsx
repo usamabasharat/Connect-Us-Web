@@ -52,7 +52,7 @@ function Register() {
         description: SIGNUP_SUCCESS,
         icon: <SmileOutlined style={{ color: '#108ee9' }} />
       });
-      navigate('/');
+      navigate('/calendar');
     }
   };
 
@@ -202,7 +202,7 @@ function Register() {
               >
                 Sign up
               </Button>
-              <Link to="/login" className="text-[#008080] hover:text-[#20b2aa]">
+              <Link to="/" className="text-[#008080] hover:text-[#20b2aa]">
                 Already a user Sign in
               </Link>
             </div>

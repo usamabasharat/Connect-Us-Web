@@ -19,7 +19,7 @@ function Navbar({ onMenuExpand }) {
       onClick: onMenuExpand
     },
     {
-      key: '/',
+      key: '/calendar',
       label: 'Dashboard',
       icon: <DashboardOutlined />,
       className: 'focus:!text-black after:!border-b-0',

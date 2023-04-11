@@ -6,7 +6,7 @@ export const GetData = async (route) => {
   }
   return null;
 };
-
+export const GetDataByID = (route, id) => fetch(`${process.env.REACT_APP_BASEURL}${route}/${id}`);
 export const GetDataByEmail = (route, email) => fetch(`${process.env.REACT_APP_BASEURL}${route}/${email}`);
 export const GetDataByType = (route, type) => fetch(`${process.env.REACT_APP_BASEURL}${route}/${type}`);
 

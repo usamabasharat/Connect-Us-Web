@@ -110,7 +110,7 @@ function ForgotPassword() {
               <Button htmlType="submit" className="w-2/3 login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]">
                 Reset Password
               </Button>
-              <Link to="/login" className="text-[#008080] hover:text-[#20b2aa]">Login Now!</Link>
+              <Link to="/" className="text-[#008080] hover:text-[#20b2aa]">Login Now!</Link>
             </div>
           </Form.Item>
         </Form>

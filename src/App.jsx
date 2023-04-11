@@ -33,8 +33,8 @@ function App() {
   };
 
   const location = useLocation();
-  const hideNavbar = ['/login', '/register', '/forgotpassword'].includes(location.pathname);
-  const hideSidebar = ['/login', '/register', '/forgotpassword'].includes(location.pathname);
+  const hideNavbar = ['/', '/register', '/forgotpassword'].includes(location.pathname);
+  const hideSidebar = ['/', '/register', '/forgotpassword'].includes(location.pathname);
 
   return (
     <div className="App">
@@ -43,10 +43,10 @@ function App() {
         {!hideSidebar && <Sidebar isMenuVisible={isMenuVisible} hideDrawer={hideDrawer} />}
         <Content>
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
             <Route exact path="/register" element={<Register />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
-            <Route path="/" element={<Calendar />} />
+            <Route path="/calendar" element={<Calendar />} />
             <Route path="/meetings" element={<Meetings />} />
             <Route path="/editprofile" element={<EditProfile />} />
             <Route path="/settings" element={<SettingPage />} />

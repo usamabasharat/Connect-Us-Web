@@ -14,12 +14,14 @@ const { Option } = Select;
 
 function Calendar() {
   const { user } = useSelector((state) => state.user);
-  console.log(user);
+  const { meetings } = useSelector((state) => state.meetings);
+  console.log(`meetings: ${JSON.stringify(meetings)}`);
+
   const Id = user.id;
   const [events] = useState([]);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
-  const [meetings, setMeetings] = useState([]);
+  const [newMeetings, setMeetings] = useState([]);
   const [info, setInfo] = useState();
   const [users, setUsers] = useState([]);
 
@@ -57,7 +59,7 @@ function Calendar() {
 
     calendarApi.unselect();
 
-    if (meetings) {
+    if (newMeetings) {
       calendarApi.addEvent({
         title,
         attendees,

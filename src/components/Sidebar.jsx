@@ -46,7 +46,7 @@ function Sidebar({ isMenuVisible, hideDrawer }) {
       className="ant-layout-sider-dark"
       placement="left"
       onClose={() => {
-        <Link to="/"> </Link>;
+        <Link to="/calendar"> </Link>;
         hideDrawer();
       }}
       open={isMenuVisible}
