@@ -41,16 +41,22 @@ function Register() {
     const data = await response.json();
     if (data.user === 'Email Already in Use') {
       notification.open({
-        message: 'Error',
+        style: { color: 'rgb(255,51,51)' },
+        message: (
+          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
+        ),
         description: SIGNUP_FAIL_EMAIL,
-        icon: <FrownOutlined style={{ color: '#108ee9' }} />
+        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
       });
     } else {
       dispatch(loginSuccess(data.user));
       notification.open({
-        message: 'Success',
+        style: { color: 'rgb(25, 135, 84)' },
+        message: (
+          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
+        ),
         description: SIGNUP_SUCCESS,
-        icon: <SmileOutlined style={{ color: '#108ee9' }} />
+        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
       });
       navigate('/calendar');
     }

@@ -54,15 +54,21 @@ function Calendar() {
     const data = await response.json();
     if (data.message === 'Meeting Created Successfully') {
       notification.open({
-        message: 'Success',
+        style: { color: 'rgb(25, 135, 84)' },
+        message: (
+          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
+        ),
         description: data.message,
-        icon: <SmileOutlined style={{ color: '#108EE9' }} />
+        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
       });
     } else {
       notification.open({
-        message: 'Error',
+        style: { color: 'rgb(255,51,51)' },
+        message: (
+          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
+        ),
         description: data.error.details[0].message,
-        icon: <FrownOutlined style={{ color: '#108EE9' }} />
+        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
       });
     }
     setMeetings({ title, attendees });
@@ -189,6 +195,13 @@ function Calendar() {
           </Form.Item>
           <Form.Item name="attendees" rules={[{ required: true, message: 'Please select at least one attendee!' }]}>
             <Select mode="tags" placeholder="Attendees">
+              {users.map((data) => (
+                <Option key={data.id} value={data.id}>{`${data.first_name} ${data.last_name}`}</Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item name="optional" rules={[{ required: true, message: 'Please select at least one attendee!' }]}>
+            <Select mode="tags" placeholder="Optional">
               {users.map((data) => (
                 <Option key={data.id} value={data.id}>{`${data.first_name} ${data.last_name}`}</Option>
               ))}

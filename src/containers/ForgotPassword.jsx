@@ -30,15 +30,21 @@ function ForgotPassword() {
 
     if (data.user === EMAIL_DOES_NOT_EXIST) {
       notification.open({
-        message: 'Error',
+        style: { color: 'rgb(255,51,51)' },
+        message: (
+          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
+        ),
         description: EMAIL_DOES_NOT_EXIST,
-        icon: <FrownOutlined style={{ color: '#108ee9' }} />
+        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
       });
     } else {
       notification.open({
-        message: 'Success',
+        style: { color: 'rgb(25, 135, 84)' },
+        message: (
+          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
+        ),
         description: PASSWORD_UPDATED,
-        icon: <SmileOutlined style={{ color: '#108ee9' }} />
+        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
       });
       // navigate('/');
     }

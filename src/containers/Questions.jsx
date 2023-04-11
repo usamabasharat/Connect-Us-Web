@@ -33,15 +33,21 @@ function Questions() {
     const data = await response.json();
     if (data.message !== 'Invalid Body') {
       notification.open({
-        message: 'Success',
+        style: { color: 'rgb(25, 135, 84)' },
+        message: (
+          <div style={{ color: 'rgb(25, 135, 84)' }}>Success</div>
+        ),
         description: QUESTION_ADDED,
-        icon: <SmileOutlined style={{ color: '#108EE9' }} />
+        icon: <SmileOutlined style={{ color: 'rgb(25, 135, 84)' }} />
       });
     } else {
       notification.open({
-        message: 'Error',
+        style: { color: 'rgb(255,51,51)' },
+        message: (
+          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
+        ),
         description: data.error.details[0].message,
-        icon: <FrownOutlined style={{ color: '#108EE9' }} />
+        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
       });
     }
     form.resetFields();
