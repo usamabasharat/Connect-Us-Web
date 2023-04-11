@@ -28,9 +28,12 @@ function Login() {
     const data = await response.json();
     if (data.user === 'Password does not match') {
       notification.open({
-        message: 'Error',
+        style: { color: 'rgb(255,51,51)' },
+        message: (
+          <div style={{ color: 'rgb(255,51,51)' }}>Error</div>
+        ),
         description: INVALID_PASSWORD,
-        icon: <FrownOutlined style={{ color: '#108ee9' }} />
+        icon: <FrownOutlined style={{ color: 'rgb(255,51,51)' }} />
       });
     } else if (data.user === EMAIL_DOES_NOT_EXIST) {
       notification.open({
