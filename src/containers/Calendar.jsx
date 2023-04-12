@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
-
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {
   Modal, Form, Input, Button, Select
 } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
-import { allMeetings } from '../store/slices/meetingSlice';
+import { useSelector } from 'react-redux';
 import { GetData, PostData, GetDataByID } from '../API/api';
 import Notification from '../components/Notification';
 
 const { Option } = Select;
 
 function Calendar() {
-  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-
   const Id = user.id;
-  const [events] = useState([]);
+  const [events, setEvents] = useState([]);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [newMeetings, setMeetings] = useState([]);
@@ -73,20 +69,27 @@ function Calendar() {
     setInfo(selectInfo);
   };
 
-  const handleEventDrop = (dropInfo) => {
-    const calendarApi = dropInfo.view.calendar;
-    const event = calendarApi.getEventById(dropInfo.event.id);
-    const { start } = dropInfo.event;
-    const { end } = dropInfo.event;
-
-    calendarApi.unselect(); // clear date selection
-
-    if (event) {
-      event.setDates(start, end);
-    }
-  };
   const handleEventClick = (clickInfo) => {
     clickInfo.event.remove();
+    // @TODO
+    // Designa a Modal here to confirm/reject meetings.
+  };
+
+  const mapMeetings = async (data) => {
+    data.forEach(async (meeting) => {
+      const { title } = meeting.meetings;
+      const fromTime = new Date(meeting.from);
+      const from = fromTime.getTime();
+      const toTime = new Date(meeting.to);
+      const to = toTime.getTime();
+
+      setEvents((previous) => [...previous, {
+        title,
+        start: from,
+        end: to,
+        allDay: false,
+      }]);
+    });
   };
 
   useEffect(() => {
@@ -99,15 +102,12 @@ function Calendar() {
 
   useEffect(() => {
     async function fetchMeetings() {
-      const meetings = await GetDataByID('meetings', user.id);
+      const meetings = await GetDataByID('meetings', Id);
       const resData = await meetings.json();
-      dispatch(allMeetings(resData));
+      mapMeetings(resData);
     }
     fetchMeetings();
   }, []);
-
-  const { meetings } = useSelector((state) => state.meetings);
-  console.log(`meetings: ${JSON.stringify(meetings)}`);
 
   return (
     <>
@@ -127,7 +127,6 @@ function Calendar() {
             editable
             events={events}
             select={handleDateSelect}
-            eventDrop={handleEventDrop}
             eventClick={handleEventClick}
           />
         </div>
