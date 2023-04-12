@@ -93,8 +93,8 @@ function Feedback() {
   };
 
   return (
-    <div className="m-auto w-1/2 border-2 rounded-md p-5 space-y-10">
-      <h1 className="text-[#008080] text-3xl">Feedback</h1>
+    <div className="py-10 m-auto w-1/2 rounded-md p-5 space-y-10">
+      <h1 className="text-[#008080] text-3xl ">Feedback</h1>
       {questions.map((question) => (
         <Card key={question.id} title={question.text}>
           {renderAnswers(question)}
