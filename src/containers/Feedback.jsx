@@ -93,21 +93,19 @@ function Feedback() {
   };
 
   return (
-    <div className="flex h-screen">
-      <div className="m-auto w-1/2 border-2 rounded-md p-5 space-y-10 bg-white">
-        <h1 className="text-[#008080] text-3xl">Feedback</h1>
-        {questions.map((question) => (
-          <Card key={question.id} title={question.text}>
-            {renderAnswers(question)}
-          </Card>
-        ))}
-        <Button
-          onClick={onFinish}
-          className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
-        >
-          Submit
-        </Button>
-      </div>
+    <div className="m-auto w-1/2 border-2 rounded-md p-5 space-y-10">
+      <h1 className="text-[#008080] text-3xl">Feedback</h1>
+      {questions.map((question) => (
+        <Card key={question.id} title={question.text}>
+          {renderAnswers(question)}
+        </Card>
+      ))}
+      <Button
+        onClick={onFinish}
+        className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
+      >
+        Submit
+      </Button>
     </div>
   );
 }

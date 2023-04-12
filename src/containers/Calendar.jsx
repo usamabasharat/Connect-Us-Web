@@ -17,17 +17,6 @@ const { Option } = Select;
 function Calendar() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  useEffect(() => {
-    async function fetchMeetings() {
-      const meetings = await GetDataByID('meetings', user.id);
-      const resData = await meetings.json();
-      dispatch(allMeetings(resData));
-    }
-    fetchMeetings();
-  });
-
-  const { meetings } = useSelector((state) => state.meetings);
-  console.log(`meetings: ${JSON.stringify(meetings)}`);
 
   const Id = user.id;
   const [events] = useState([]);
@@ -107,6 +96,18 @@ function Calendar() {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    async function fetchMeetings() {
+      const meetings = await GetDataByID('meetings', user.id);
+      const resData = await meetings.json();
+      dispatch(allMeetings(resData));
+    }
+    fetchMeetings();
+  }, []);
+
+  const { meetings } = useSelector((state) => state.meetings);
+  console.log(`meetings: ${JSON.stringify(meetings)}`);
 
   return (
     <>
