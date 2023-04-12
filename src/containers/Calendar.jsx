@@ -16,11 +16,13 @@ function Calendar() {
   const { user } = useSelector((state) => state.user);
   const Id = user.id;
   const [events, setEvents] = useState([]);
+  const [singleEvent, setSingleEvent] = useState(null);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [newMeetings, setMeetings] = useState([]);
   const [info, setInfo] = useState();
   const [users, setUsers] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const onFinish = async (values) => {
     const calendarApi = info.view.calendar;
@@ -60,6 +62,7 @@ function Calendar() {
   };
 
   const handleCancel = () => {
+    setIsModalVisible(false);
     setVisible(false);
     form.resetFields();
   };
@@ -70,7 +73,14 @@ function Calendar() {
   };
 
   const handleEventClick = (clickInfo) => {
-    clickInfo.event.remove();
+    setIsModalVisible(true);
+    console.dir(clickInfo);
+    setSingleEvent({
+      title: clickInfo.event.title,
+      start: clickInfo.event.start,
+      end: clickInfo.event.end,
+    });
+    // clickInfo.event.remove();
     // @TODO
     // Designa a Modal here to confirm/reject meetings.
   };
@@ -229,6 +239,31 @@ function Calendar() {
           </div>
         </Form>
       </Modal>
+      <Modal
+        title={singleEvent && singleEvent.title}
+        open={isModalVisible}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="accept">
+            Accept
+          </Button>,
+          <Button key="reject" type="danger">
+            Reject
+          </Button>,
+        ]}
+      >
+        <p>
+          Start Time:
+          {' '}
+          {singleEvent && singleEvent.start.toString()}
+        </p>
+        <p>
+          End Time:
+          {' '}
+          {singleEvent && singleEvent.end.toString()}
+        </p>
+      </Modal>
+      ;
     </>
   );
 }
