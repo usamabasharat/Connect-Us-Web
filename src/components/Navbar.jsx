@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu } from 'antd';
 import {
-  QuestionCircleOutlined, MessageOutlined, MenuOutlined, TeamOutlined, DashboardOutlined
+  QuestionCircleOutlined, MessageOutlined, MenuOutlined, DashboardOutlined
 } from '@ant-design/icons';
 import 'tailwindcss/tailwind.css';
 import { useNavigate } from 'react-router-dom';
@@ -22,12 +22,6 @@ function Navbar({ onMenuExpand }) {
       key: '/calendar',
       label: 'Dashboard',
       icon: <DashboardOutlined />,
-      className: 'focus:!text-black after:!border-b-0',
-    },
-    {
-      key: '/meetings',
-      label: 'Meetings',
-      icon: <TeamOutlined />,
       className: 'focus:!text-black after:!border-b-0',
     },
     {

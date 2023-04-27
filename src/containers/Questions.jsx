@@ -75,8 +75,8 @@ function Questions() {
   }
 
   return (
-    <div className="py-60 max-w-3xl mx-auto">
-      <h1 className="text-[#008080] text-3xl pb-8">Create Questions</h1>
+    <div className="py-10 m-auto w-1/2 rounded-md p-5 space-y-10">
+      <h1 className="text-[#008080] text-3xl">Create Questions</h1>
       <Form form={form} onFinish={handleSubmit}>
         <Card title="Question Type" className="max-w-xl mx-auto">
           <Form.Item rules={[{ required: true }]}>
@@ -137,18 +137,32 @@ function Questions() {
         </Card>
         {answerType !== 'string' && (
           <Card title="Add a Option" className="max-w-xl mx-auto">
-            <Input className="w-full" value={newOption} onChange={changeHandler} placeholder="Add Option" />
-            <Button
-              onClick={addOption}
-              className="mt-5 text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
-            >
-              Add Answer
-            </Button>
+            <Input.Group compact>
+              <Input
+                style={{ width: '70%' }}
+                value={newOption}
+                onChange={changeHandler}
+                placeholder="Add Option"
+              />
+              <Button
+                style={{ width: '20%' }}
+                onClick={addOption}
+                className="ml-5 text-white
+                border-[#008080] bg-[#008080] hover:bg-[#20B2AA]
+                hover:!text-white hover:!border-[#20B2AA]"
+              >
+                Add
+
+              </Button>
+            </Input.Group>
           </Card>
         )}
         <Form.Item>
-          <Button htmlType="submit">
-            Add Question
+          <Button
+            htmlType="submit"
+            className="mt-2 login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]"
+          >
+            Submit
           </Button>
         </Form.Item>
       </Form>

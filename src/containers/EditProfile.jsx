@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {
-  LockOutlined, PhoneOutlined, UserOutlined
+  PhoneOutlined, UserOutlined
 } from '@ant-design/icons';
 import {
   Button, Form, Select
@@ -10,12 +10,10 @@ import { Link } from 'react-router-dom';
 import Textfield from '../shared/TextField';
 import {
   FIRST_NAME_PROMPT, LAST_NAME_PROMPT,
-  MIN_PASSWORD_PROMPT, PASSWORD_REQUIRED_PROMPT,
-  STRONG_PASSWORD_PROMPT,
   USER_UPDATED,
   VALID_NUMBER_PROMPT,
 } from '../constants/messages';
-import { NUMBER_PATTERN, PASSWORD_PATTERN } from '../constants/pattern';
+import { NUMBER_PATTERN } from '../constants/pattern';
 import { PutData } from '../API/api';
 import Notification from '../components/Notification';
 
@@ -24,6 +22,7 @@ function EditProfile() {
   const [form] = Form.useForm();
   const linkValue = true;
   const { user } = useSelector((state) => state.user);
+
   const onFinish = async (values) => {
     const Id = user.id;
     const response = await PutData(`users/${Id}`, values);
@@ -69,21 +68,6 @@ function EditProfile() {
             rules={[{
               required: true, message: LAST_NAME_PROMPT,
             }]}
-          />
-          <Textfield
-            name="password"
-            labelText="Password"
-            placeholder="Enter Password"
-            rules={[
-              { required: true, message: PASSWORD_REQUIRED_PROMPT },
-              { min: 8, message: MIN_PASSWORD_PROMPT },
-              {
-                pattern: PASSWORD_PATTERN,
-                message: STRONG_PASSWORD_PROMPT
-              }
-            ]}
-            type="password"
-            prefix={<LockOutlined className="site-form-item-icon" />}
           />
           <Textfield
             name="phone"
