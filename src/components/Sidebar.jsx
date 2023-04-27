@@ -2,7 +2,9 @@ import React from 'react';
 import { Menu, Drawer } from 'antd';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import { UserOutlined, SettingOutlined, EditOutlined } from '@ant-design/icons';
+import {
+  UserOutlined, LogoutOutlined, SettingOutlined, EditOutlined
+} from '@ant-design/icons';
 
 function Sidebar({ isMenuVisible, hideDrawer }) {
   const navigate = useNavigate();
@@ -39,6 +41,11 @@ function Sidebar({ isMenuVisible, hideDrawer }) {
       key: '/exceptionSlots',
       label: 'Exception Slots',
       icon: <SettingOutlined />,
+    },
+    {
+      key: '/',
+      label: 'Log Out',
+      icon: <LogoutOutlined />,
     }
   ];
   return (

@@ -113,8 +113,9 @@ function Calendar() {
   useEffect(() => {
     async function fetchMeetings() {
       const meetings = await GetDataByID('meetings', Id);
-      const resData = await meetings.json();
-      mapMeetings(resData);
+      const allMeetings = await meetings.json();
+      setMeetings(allMeetings);
+      mapMeetings(allMeetings);
     }
     fetchMeetings();
   }, []);
@@ -143,26 +144,51 @@ function Calendar() {
         <div className="flex w-1/4 justify-center mt-8">
           <div className="flex flex-col w-full md:w-1/2">
             <h2 className="text-2xl font-bold mb-4">Upcoming Meetings</h2>
-            <div className="bg-white rounded-lg shadow-md overflow-hidden mb-4">
-              <div className="p-4 border-b">
-                <h3 className="text-lg font-medium">Meeting with John Doe</h3>
-                <p className="text-gray-500 text-sm mt-1">Wednesday, March 23, 2023 at 10:00 AM</p>
-              </div>
-              <div className="p-4 flex justify-end">
-                <Button className="mr-2">Accept</Button>
-                <Button className="mr-2">Reject</Button>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow-md overflow-hidden mb-4">
-              <div className="p-4 border-b">
-                <h3 className="text-lg font-medium">Meeting with Jane Doe</h3>
-                <p className="text-gray-500 text-sm mt-1">Thursday, March 24, 2023 at 2:00 PM</p>
-              </div>
-              <div className="p-4 flex justify-end">
-                <Button className="mr-2">Accept</Button>
-                <Button className="mr-2">Reject</Button>
-              </div>
-            </div>
+            {newMeetings.map((meeting) => {
+              const startDateTime = new Date(meeting.meetings.scheduled_slots[0].from);
+              const startDate = startDateTime.toLocaleDateString('en-US', { weekday: 'long' });
+              const startTime = startDateTime.toLocaleTimeString('en-US');
+
+              const endDateTime = new Date(meeting.meetings.scheduled_slots[0].to);
+              const endDate = endDateTime.toLocaleDateString('en-US', { weekday: 'long' });
+              const endTime = endDateTime.toLocaleTimeString('en-US');
+
+              return (
+                <div className="bg-white rounded-lg shadow-md overflow-hidden mb-4">
+                  <div className="p-4 border-b">
+                    <h3 className="text-lg font-medium">{meeting.meetings.title}</h3>
+                    <p className="text-gray-500 text-sm mt-1">
+                      Start:
+                      {' '}
+                      {startDate}
+                      {' '}
+                      at
+                      {' '}
+                      {startTime}
+                    </p>
+                    <p className="text-gray-500 text-sm mt-1">
+                      End:
+                      {' '}
+                      {endDate}
+                      {' '}
+                      at
+                      {' '}
+                      {endTime}
+                    </p>
+                  </div>
+                  <div className="p-4 flex justify-end">
+                    <Button className="login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]">
+                      Accept
+
+                    </Button>
+                    <Button className="ml-2 login-form-button text-white border-[#008080] bg-[#008080] hover:bg-[#20B2AA] hover:!text-white hover:!border-[#20B2AA]">
+                      Reject
+
+                    </Button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
